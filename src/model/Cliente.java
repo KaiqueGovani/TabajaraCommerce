@@ -9,7 +9,7 @@ public abstract class Cliente {
     // Atributos protegidos para que as classes filhas possam acessar
     protected String nome;
     protected Endereco endereco;
-    protected LocalDate dataCadastro; // Classe que representa data YYYY-MM-dd
+    protected LocalDate dataCadastro; // Classe que representa data YYYY-MM-DD
 
     public Cliente(String nome, Endereco endereco, LocalDate dataCadastro) {
         this.nome = nome;
@@ -17,5 +17,10 @@ public abstract class Cliente {
         this.dataCadastro = dataCadastro;
     }
 
+    public String pegarNome(){
+        return this.nome;
+    }
+
     public abstract String paraString();
+    public abstract String pegarDocumento();
 }

@@ -19,4 +19,9 @@ public class PessoaJuridica extends Cliente {
         return "Nome: " + this.nome + " Endereço: " + this.endereco.paraString() + " Data de Cadastro: "
                 + this.dataCadastro + " CNPJ: " + this.cnpj + " Razão Social: " + this.razaoSocial + " Prazo de Pagamento: " + this.prazoPagamento;
     }
+
+    @Override
+    public String pegarDocumento() {
+        return this.cnpj;
+    }
 }
