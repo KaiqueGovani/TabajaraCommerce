@@ -17,12 +17,15 @@ public class PessoaFisica extends Cliente {
 
     @Override
     public String paraString() {
-        return "Nome: " + this.pegarNome() + " Endereço: " + this.endereco.paraString() + " Data de Cadastro: "
-                + this.dataCadastro + " CPF: " + this.cpf + " Máximo de Parcelas: " + this.qtdMaxParcelas;
+        return "Nome: " + pegarNome() + 
+                ", Endereço: " + endereco.paraString() + 
+                ", Data de Cadastro: "  + dataCadastro + 
+                ", CPF:, " + cpf + 
+                ", Máximo de Parcelas: " + qtdMaxParcelas;
     }
 
     @Override
     public String pegarDocumento() {
-        return this.cpf;
+        return cpf;
     }
 }

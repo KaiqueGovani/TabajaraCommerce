@@ -1,34 +1,48 @@
+package model;
+
 public class Produto {
     private int codigo;
     private String nome;
     private String descricao;
     private double preco;
 
-    @Override
-    public String toString(){
-        return "Produto{" +
-                "codigo=" + codigo +
-                ", nome='" + nome + '\'' +
-                ", descricao='" + descricao + '\'' +
-                ", preco=" + preco +
-                '}'; 
-        }
+    public String paraString() {
+        return "Produto: " +
+                ", Codigo: " + codigo +
+                ", Nome: " + nome +
+                ", Descricao: " + descricao +
+                ", Preco: " + preco;
+    }
 
-    public int getCodigo(){
+    public int pegarCodigo() {
         return codigo;
     }
 
-    public void setCodigo(int codigo) {this.codigo = codigo;}
+    public void setarCodigo(int codigo) {
+        this.codigo = codigo;
+    }
 
-    public String getNome() {return nome;}
+    public String pegarNome() {
+        return nome;
+    }
 
-    public void setNome(String nome){this.nome = nome;}
+    public void setarNome(String nome) {
+        this.nome = nome;
+    }
 
-    public String getDescricao() {return descricao;}
+    public String pegarDescricao() {
+        return descricao;
+    }
 
-    public void SetDescricao(String descricao){this.descricao = descricao;}
+    public void setarDescricao(String descricao) {
+        this.descricao = descricao;
+    }
 
-    public double getPreco() {return preco;}
+    public double pegarPreco() {
+        return preco;
+    }
 
-    public void setPreco(double preco){this.preco = preco;}
+    public void setarPreco(double preco) {
+        this.preco = preco;
+    }
 }

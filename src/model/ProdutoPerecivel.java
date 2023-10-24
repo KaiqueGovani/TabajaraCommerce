@@ -1,21 +1,26 @@
+package model;
+
+import java.time.LocalDate;
+
 public class ProdutoPerecivel extends Produto {
     private LocalDate dataDeValidade;
 
-    public LocalDate getDataDeValidade(){
+    public LocalDate pegarDataDeValidade() {
         return dataDeValidade;
     }
 
-    public void setDataDeValidade(LocalDate dataDeValidade){
+    public void setarDataDeValidade(LocalDate dataDeValidade) {
         this.dataDeValidade = dataDeValidade;
     }
 
-    public boolean estaVencido(){
-        LocalDate dataAtual = LocalDate.now(); //obtém a data atual
-        return dataDeValidade.isBefore(dataAtual); //compara a data de validade com a data atual
+    public boolean estaVencido() {
+        LocalDate dataAtual = LocalDate.now(); // obtém a data atual
+        return dataDeValidade.isBefore(dataAtual); // compara a data de validade com a data atual
     }
 
     @Override
-    public String toString(){
-        return super.toString() + ", dataDeValidade=" + dataDeValidade;
+    public String paraString() {
+        return super.paraString() +
+                ", Data De Validade: " + dataDeValidade;
     }
 }

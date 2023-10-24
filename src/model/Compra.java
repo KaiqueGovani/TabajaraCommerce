@@ -12,7 +12,8 @@ public class Compra {
     private List<ItemCompra> itensComprados;
     private double totalPago;
 
-    public Compra(int identificador, LocalDate dataPedido, double valorTotal, Cliente cliente, List<ItemCompra> itensComprados, double totalPago) {
+    public Compra(int identificador, LocalDate dataPedido, double valorTotal, Cliente cliente,
+            List<ItemCompra> itensComprados, double totalPago) {
         this.identificador = identificador;
         this.dataPedido = dataPedido;
         this.valorTotal = valorTotal;
@@ -33,7 +34,7 @@ public class Compra {
         return total;
     }
 
-    public double valorFaltante () {
+    public double valorFaltante() {
         return pegarValorTotal() - totalPago;
     }
 }

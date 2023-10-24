@@ -17,10 +17,11 @@ public abstract class Cliente {
         this.dataCadastro = dataCadastro;
     }
 
-    public String pegarNome(){
+    public String pegarNome() {
         return this.nome;
     }
 
     public abstract String paraString();
+
     public abstract String pegarDocumento();
 }
