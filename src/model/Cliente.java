@@ -18,6 +18,7 @@ public abstract class Cliente {
     }
 
     public abstract String paraString();
+
     public abstract String pegarDocumento();
 
     public String pegarNome() {
