@@ -1,3 +1,6 @@
+import controller.GerenciamentoClientes;
+import controller.GerenciamentoCompras;
+import controller.GerenciamentoProdutos;
 import view.InterfaceUsuario;
 
 /**
@@ -5,56 +8,59 @@ import view.InterfaceUsuario;
  */
 public class Main {
 
+    static GerenciamentoClientes gerenciamentoClientes = new GerenciamentoClientes();
+    static GerenciamentoProdutos gerenciamentoProdutos = new GerenciamentoProdutos();
+    static GerenciamentoCompras gerenciamentoCompras = new GerenciamentoCompras();
+    static InterfaceUsuario menu = new InterfaceUsuario(gerenciamentoClientes);
+
     public static void main(String[] args) {
         int opcaoInt = -1;
 
         do {
-            String opcao = InterfaceUsuario.menuPrincipal();
+            String opcao = menu.menuPrincipal();
 
-            if (opcao != null) {
-                try {
-                    opcaoInt = Integer.parseInt(opcao);
-                    if (opcaoInt >= 1 && opcaoInt <= 8) {
+            try {
+                opcaoInt = Integer.parseInt(opcao);
+                if (opcaoInt >= 1 && opcaoInt <= 8) {
 
-                        switch (opcaoInt) {
-                            case 1:
-                                // TODO 1. Cadastros de Clientes
-                                InterfaceUsuario.cadastrarCliente();
-                                break;
-                            case 2:
-                                // TODO 2. Deletar cliente pelo CPF ou CNPJ
-                                break;
-                            case 3:
-                                // TODO 3. Deletar cliente pelo nome
-                                break;
-                            case 4:
-                                // TODO 4. Cadastro de Produtos
-                                break;
-                            case 5:
-                                // TODO 5. Efetuação de uma compra
-                                break;
-                            case 6:
-                                // TODO 6. Atualização da situação de pagamento de uma compra
-                                break;
-                            case 7:
-                                // TODO 7. Relatórios
-                                break;
-                            case 8:
-                                InterfaceUsuario.avisoSaindo();
-                                break;
-                        }
-
-                    } else {
-                        InterfaceUsuario.mostrarErro("Opção inválida!", "Erro");
+                    switch (opcaoInt) {
+                        case 1:
+                            menu.cadastrarCliente();
+                            break;
+                        case 2:
+                            menu.deletarClientePorDocumento();
+                            break;
+                        case 3:
+                            menu.deletarClientePorNome();
+                            break;
+                        case 4:
+                            // TODO 4. Cadastro de Produtos
+                            break;
+                        case 5:
+                            // TODO 5. Efetuação de uma compra
+                            break;
+                        case 6:
+                            // TODO 6. Atualização da situação de pagamento de uma compra
+                            break;
+                        case 7:
+                            // TODO 7. Relatórios
+                            break;
+                        case 8:
+                            InterfaceUsuario.avisoSaindo();
+                            break;
                     }
-                } catch (NumberFormatException e) {
-                    InterfaceUsuario.mostrarErro("Entrada inválida!", "Erro");
+
+                } else {
+                    InterfaceUsuario.mostrarErro("Opção inválida!", "Erro");
                 }
-            } else {
-                InterfaceUsuario.avisoSaindo();
+            } catch (NumberFormatException e) {
+                InterfaceUsuario.mostrarErro("Entrada inválida!", "Erro");
+            } catch (Exception e) {
+                InterfaceUsuario.mostrarErro(e.getMessage(), "Erro");
             }
 
         } while (opcaoInt != 8);
 
     }
+
 }
