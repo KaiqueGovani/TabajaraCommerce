@@ -1,9 +1,13 @@
 package controller;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 import model.Cliente;
+import model.Endereco;
+import model.PessoaFisica;
+import model.PessoaJuridica;
 
 /**
  * GerenciamentoClientes
@@ -25,11 +29,25 @@ public class GerenciamentoClientes {
      * @return true se o cliente foi criado, false caso contrário
      */
     public boolean cadastrarCliente(Cliente cliente) {
-        if (buscaClientePorDocumento(cliente.pegarDocumento())) {
+        if (buscaPeloDocumento(cliente.pegarDocumento())) {
             return false; // Cliente já existe
         }
         clientes.add(cliente);
+        System.out.println("Cliente cadastrado com sucesso!");
+        System.out.println(cliente.paraString());
         return true;
+    }
+
+    public Endereco criarEndereco(String rua, int numero, String bairro, String cep, String cidade, String estado) {
+        return new Endereco(rua, numero, bairro, cep, cidade, estado);
+    }
+
+    public PessoaFisica criarPessoaFisica(String nome, Endereco endereco, String cpf, int qtdMaxParcelas) {
+        return new PessoaFisica(nome, endereco, LocalDate.now(), cpf, qtdMaxParcelas);
+    }
+
+    public PessoaJuridica criarPessoaJuridica(String nome, Endereco endereco, String cnpj, String razaoSocial, int prazoPagamento) {
+        return new PessoaJuridica(nome, endereco, LocalDate.now(), cnpj, razaoSocial, prazoPagamento);
     }
 
     /**
@@ -38,7 +56,7 @@ public class GerenciamentoClientes {
      * @param documento
      * @return true se o houver um cliente com o documento, false caso contrário
      */
-    public boolean buscaClientePorDocumento(String documento) {
+    public boolean buscaPeloDocumento(String documento) {
         for (Cliente cliente : clientes) {
             if (cliente.pegarDocumento().equals(documento)) {
                 return true;
