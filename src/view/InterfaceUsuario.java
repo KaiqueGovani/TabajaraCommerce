@@ -42,7 +42,14 @@ public class InterfaceUsuario {
      * @return String do valor digitado
      */
     public String pegaValorDigitado(String msg, String titulo) {
-        String valorDigitado = JOptionPane.showInputDialog(null, msg, titulo, JOptionPane.PLAIN_MESSAGE);
+        String valorDigitado;
+        do {
+            valorDigitado = JOptionPane.showInputDialog(null, msg, titulo, JOptionPane.PLAIN_MESSAGE);
+            if (valorDigitado == null || valorDigitado.equals("")) {
+                mostrarAlerta("Entrada inválida!", titulo);
+            }
+        } while (valorDigitado == null || valorDigitado.equals(""));
+        
         return valorDigitado;
     }
 
