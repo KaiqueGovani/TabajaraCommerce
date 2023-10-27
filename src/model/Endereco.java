@@ -71,10 +71,10 @@ public class Endereco {
 
     public String paraString() {
         return "Rua: " + rua +
-                "- Número: " + numero +
-                "- Bairro: " + bairro +
-                "- CEP: " + cep +
-                "- Cidade: " + cidade +
-                "- Estado: " + estado;
+                " - Número: " + numero +
+                " - Bairro: " + bairro +
+                " - CEP: " + cep +
+                " - Cidade: " + cidade +
+                " - Estado: " + estado;
     }
 }
