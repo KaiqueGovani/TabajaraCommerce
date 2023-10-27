@@ -20,6 +20,55 @@ public class Endereco {
         this.estado = estado;
     }
 
+    public String pegarRua() {
+        return rua;
+    }
+
+    public void setarRua(String rua) {
+        this.rua = rua;
+    }
+
+    public int pegarNumero() {
+        return numero;
+    }
+
+    public void setarNumero(int numero) {
+        this.numero = numero;
+    }
+
+    public String pegarBairro() {
+        return bairro;
+    }
+
+    public void setarBairro(String bairro) {
+        this.bairro = bairro;
+    }
+
+    public String pegarCep() {
+        return cep;
+    }
+
+    public void setarCep(String cep) {
+        this.cep = cep;
+    }
+
+    public String pegarCidade() {
+        return cidade;
+    }
+
+    public void setarCidade(String cidade) {
+        this.cidade = cidade;
+    }
+
+    public String pegarEstado() {
+        return estado;
+    }
+
+    public void setarEstado(String estado) {
+        this.estado = estado;
+    }
+
+
     public String paraString() {
         return "Rua: " + this.rua + " Número: " + this.numero + " Bairro: " + this.bairro + " CEP: " + this.cep
                 + " Cidade: " + this.cidade + " Estado: " + this.estado;

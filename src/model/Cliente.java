@@ -17,10 +17,30 @@ public abstract class Cliente {
         this.dataCadastro = dataCadastro;
     }
 
-    public String pegarNome(){
-        return this.nome;
-    }
-
     public abstract String paraString();
     public abstract String pegarDocumento();
+
+    public String pegarNome() {
+        return nome;
+    }
+
+    public void setarNome(String nome) {
+        this.nome = nome;
+    }
+
+    public Endereco pegarEndereco() {
+        return endereco;
+    }
+
+    public void setarEndereco(Endereco endereco) {
+        this.endereco = endereco;
+    }
+
+    public LocalDate pegarDataCadastro() {
+        return dataCadastro;
+    }
+
+    public void setarDataCadastro(LocalDate dataCadastro) {
+        this.dataCadastro = dataCadastro;
+    }
 }

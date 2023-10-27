@@ -14,6 +14,30 @@ public class PessoaJuridica extends Cliente {
         this.prazoPagamento = prazoPagamento;
     }
 
+    public String pegarCnpj(){
+        return cnpj;
+    }
+
+    public void setarCnpj(String cnpj){
+        this.cnpj = cnpj;
+    }
+
+    public String pegarSocial(){
+        return razaoSocial;
+    }
+
+    public void setarSocial(String razaoSocial){
+        this.razaoSocial = razaoSocial;
+    }
+
+    public int pegarPrazo(){
+        return prazoPagamento;
+    }
+
+    public void setarPrazo(int prazoPagamento){
+        this.prazoPagamento = prazoPagamento;
+    }
+
     @Override
     public String paraString(){
         return "Nome: " + this.nome + " Endereço: " + this.endereco.paraString() + " Data de Cadastro: "

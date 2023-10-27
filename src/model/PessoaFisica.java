@@ -15,6 +15,22 @@ public class PessoaFisica extends Cliente {
         this.qtdMaxParcelas = maxParcelas;
     }
 
+    public String pegarCpf() {
+        return cpf;
+    }
+
+    public void setarCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
+    public int pegarQtdMaxParcelas() {
+        return qtdMaxParcelas;
+    }
+
+    public void setarQtdMaxParcelas(int qtdMaxParcelas) {
+        this.qtdMaxParcelas = qtdMaxParcelas;
+    }
+
     @Override
     public String paraString() {
         return "Nome: " + this.pegarNome() + " Endereço: " + this.endereco.paraString() + " Data de Cadastro: "
