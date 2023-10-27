@@ -24,7 +24,7 @@ public class GerenciamentoClientes {
      * @param cliente
      * @return true se o cliente foi criado, false caso contrário
      */
-    public boolean criarCliente(Cliente cliente) {
+    public boolean cadastrarCliente(Cliente cliente) {
         if (buscaClientePorDocumento(cliente.pegarDocumento())) {
             return false; // Cliente já existe
         }
