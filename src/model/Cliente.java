@@ -11,13 +11,15 @@ public abstract class Cliente {
     protected Endereco endereco;
     protected LocalDate dataCadastro; // Classe que representa data YYYY-MM-DD
 
-    public Cliente(String nome, Endereco endereco, LocalDate dataCadastro) {
+    public Cliente(String nome, LocalDate dataCadastro,  Endereco endereco) {
         this.nome = nome;
-        this.endereco = endereco;
         this.dataCadastro = dataCadastro;
+        this.endereco = endereco;
     }
 
     public abstract String paraString();
+
+    public abstract String paraStringFormatado();
 
     public abstract String pegarDocumento();
 

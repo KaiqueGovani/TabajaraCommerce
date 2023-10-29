@@ -9,7 +9,7 @@ public class PessoaJuridica extends Cliente {
 
     public PessoaJuridica(String nome, Endereco endereco, LocalDate dataCadastro, String cnpj, String razaoSocial,
             int prazoPagamento) {
-        super(nome, endereco, dataCadastro); // chama o construtor da classe pai
+        super(nome, dataCadastro, endereco); // chama o construtor da classe pai
         this.cnpj = cnpj;
         this.razaoSocial = razaoSocial;
         this.prazoPagamento = prazoPagamento;
@@ -40,13 +40,23 @@ public class PessoaJuridica extends Cliente {
     }
 
     @Override
-    public String paraString() {
+    public String paraString(){
+        return "PJ," + nome + "," +
+               dataCadastro + "," +
+               cnpj + "," +
+               razaoSocial + "," +
+               prazoPagamento + "," +
+               endereco.paraString();
+    }
+
+    @Override
+    public String paraStringFormatado() {
         return "Nome Fantasia: " + nome +
-                ", Endereço: " + endereco.paraString() +
-                ", Data de Cadastro: " + dataCadastro +
-                ", CNPJ: " + cnpj +
-                ", Razão Social: " + razaoSocial +
-                ", Prazo de Pagamento: " + prazoPagamento;
+               "\nData de Cadastro: " + dataCadastro +
+               "\nCNPJ: " + cnpj +
+               "\nRazão Social: " + razaoSocial +
+               "\nPrazo de Pagamento: " + prazoPagamento+
+               "\nEndereço: " + endereco.paraString();
     }
 
     @Override

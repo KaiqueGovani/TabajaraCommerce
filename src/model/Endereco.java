@@ -68,13 +68,21 @@ public class Endereco {
         this.estado = estado;
     }
 
-
     public String paraString() {
+        return rua + "," + 
+               numero + "," + 
+               bairro + "," + 
+               cep + "," + 
+               cidade + "," + 
+               estado;
+    }
+
+    public String paraStringFormatado() {
         return "Rua: " + rua +
-                " - Número: " + numero +
-                " - Bairro: " + bairro +
-                " - CEP: " + cep +
-                " - Cidade: " + cidade +
-                " - Estado: " + estado;
+                "\nNúmero: " + numero +
+                "\nBairro: " + bairro +
+                "\nCEP: " + cep +
+                "\nCidade: " + cidade +
+                "\nEstado: " + estado;
     }
 }

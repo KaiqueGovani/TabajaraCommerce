@@ -10,7 +10,7 @@ public class PessoaFisica extends Cliente {
     private int qtdMaxParcelas;
 
     public PessoaFisica(String nome, Endereco endereco, LocalDate dataCadastro, String cpf, int maxParcelas) {
-        super(nome, endereco, dataCadastro); // chama o construtor da classe pai
+        super(nome, dataCadastro, endereco); // chama o construtor da classe pai
         this.cpf = cpf;
         this.qtdMaxParcelas = maxParcelas;
     }
@@ -33,15 +33,25 @@ public class PessoaFisica extends Cliente {
 
     @Override
     public String paraString() {
-        return "Nome: " + pegarNome() + 
-                ", Endereço: " + endereco.paraString() + 
-                ", Data de Cadastro: "  + dataCadastro + 
-                ", CPF:, " + cpf + 
-                ", Máximo de Parcelas: " + qtdMaxParcelas;
+        return "PF," + nome + "," +
+               dataCadastro + "," +
+               cpf + "," +
+               qtdMaxParcelas + "," +
+               endereco.paraString();
+    }
+
+    @Override
+    public String paraStringFormatado() {
+        return "Nome: " + nome +
+                "\nData de Cadastro: "  + dataCadastro + 
+                "\nCPF: " + cpf + 
+                "\nMáximo de Parcelas: " + qtdMaxParcelas + 
+                "\nEndereço: " + endereco.paraStringFormatado();
     }
 
     @Override
     public String pegarDocumento() {
         return cpf;
     }
+
 }
