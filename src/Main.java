@@ -1,3 +1,4 @@
+import controller.GerenciamentoArquivos;
 import controller.GerenciamentoClientes;
 import controller.GerenciamentoCompras;
 import controller.GerenciamentoProdutos;
@@ -7,60 +8,75 @@ import view.InterfaceUsuario;
  * main
  */
 public class Main {
+    static GerenciamentoArquivos gerenciamentoArquivos;
+    static GerenciamentoClientes gerenciamentoClientes;
+    static GerenciamentoProdutos gerenciamentoProdutos;
+    static GerenciamentoCompras gerenciamentoCompras;
+    static InterfaceUsuario menu;
 
-    static GerenciamentoClientes gerenciamentoClientes = new GerenciamentoClientes();
-    static GerenciamentoProdutos gerenciamentoProdutos = new GerenciamentoProdutos();
-    static GerenciamentoCompras gerenciamentoCompras = new GerenciamentoCompras();
-    static InterfaceUsuario menu = new InterfaceUsuario(gerenciamentoClientes);
+    public void setup() {
+        gerenciamentoClientes = new GerenciamentoClientes();
+        gerenciamentoProdutos = new GerenciamentoProdutos();
+        gerenciamentoCompras = new GerenciamentoCompras();
+        gerenciamentoArquivos = new GerenciamentoArquivos(gerenciamentoClientes, gerenciamentoProdutos, gerenciamentoCompras);
+        menu = new InterfaceUsuario(gerenciamentoClientes);
+    }
 
     public static void main(String[] args) {
-        int opcaoInt = -1;
+        try {
+            new Main().setup();
 
-        do {
-            String opcao = menu.menuPrincipal();
+            int opcaoInt = -1;
 
-            try {
-                opcaoInt = Integer.parseInt(opcao);
-                if (opcaoInt >= 1 && opcaoInt <= 8) {
+            do {
+                String opcao = menu.menuPrincipal();
 
-                    switch (opcaoInt) {
-                        case 1:
-                            menu.cadastrarCliente();
-                            break;
-                        case 2:
-                            menu.deletarClientePorDocumento();
-                            break;
-                        case 3:
-                            menu.deletarClientePorNome();
-                            break;
-                        case 4:
-                            // TODO 4. Cadastro de Produtos
-                            break;
-                        case 5:
-                            // TODO 5. Efetuação de uma compra
-                            break;
-                        case 6:
-                            // TODO 6. Atualização da situação de pagamento de uma compra
-                            break;
-                        case 7:
-                            // TODO 7. Relatórios
-                            break;
-                        case 8:
-                            InterfaceUsuario.avisoSaindo();
-                            break;
+                try {
+                    opcaoInt = Integer.parseInt(opcao);
+                    if (opcaoInt >= 1 && opcaoInt <= 8) {
+
+                        switch (opcaoInt) {
+                            case 1:
+                                menu.cadastrarCliente();
+                                break;
+                            case 2:
+                                menu.deletarClientePorDocumento();
+                                break;
+                            case 3:
+                                menu.deletarClientePorNome();
+                                break;
+                            case 4:
+                                // TODO 4. Cadastro de Produtos
+                                break;
+                            case 5:
+                                // TODO 5. Efetuação de uma compra
+                                break;
+                            case 6:
+                                // TODO 6. Atualização da situação de pagamento de uma compra
+                                break;
+                            case 7:
+                                // TODO 7. Relatórios
+                                break;
+                            case 8:
+                                gerenciamentoArquivos.salvarDados();
+                                InterfaceUsuario.avisoSaindo();
+                                break;
+                        }
+
+                    } else {
+                        InterfaceUsuario.mostrarErro("Opção inválida!", "Erro");
                     }
-
-                } else {
-                    InterfaceUsuario.mostrarErro("Opção inválida!", "Erro");
+                } catch (NumberFormatException e) {
+                    InterfaceUsuario.mostrarErro("Entrada inválida!", "Erro");
+                } catch (Exception e) {
+                    InterfaceUsuario.mostrarErro(e.getMessage(), "Erro");
                 }
-            } catch (NumberFormatException e) {
-                InterfaceUsuario.mostrarErro("Entrada inválida!", "Erro");
-            } catch (Exception e) {
-                InterfaceUsuario.mostrarErro(e.getMessage(), "Erro");
-            }
 
-        } while (opcaoInt != 8);
+            } while (opcaoInt != 8);
 
+        } catch (Exception e) {
+            InterfaceUsuario.mostrarErro(e.getMessage(), "Erro");
+        }
     }
 
 }
