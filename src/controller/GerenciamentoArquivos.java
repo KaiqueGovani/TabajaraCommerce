@@ -54,7 +54,6 @@ public class GerenciamentoArquivos {
         //TODO lerCompras(), lerProdutos();
     }
 
-    // TODO Ler e Salvar clientes do arquivo dadosClientes.txt
     public void salvarClientes(List<Cliente> clientes) {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(fclientes))) {
             for (Cliente cliente : clientes) {
