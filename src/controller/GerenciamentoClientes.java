@@ -35,7 +35,7 @@ public class GerenciamentoClientes {
         clientes.add(cliente);
         // ! Logs para Depuração
         System.out.println("Cliente cadastrado com sucesso!");
-        System.out.println(cliente.paraString());
+        System.out.println(cliente.paraStringFormatado());
         return true;
     }
 
@@ -113,9 +113,8 @@ public class GerenciamentoClientes {
      */
     public boolean deletarPeloNome(String nome) {
         for (Cliente cliente : clientes) {
-            if (cliente.pegarNome()
-                    .toLowerCase(null)
-                    .equals(nome.toLowerCase(null))) {
+            System.out.println("Tenta deletar: " + cliente.pegarNome());
+            if (cliente.pegarNome().toLowerCase().equals(nome.toLowerCase())) {
                 clientes.remove(cliente);
                 return true;
             }
