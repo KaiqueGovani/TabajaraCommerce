@@ -9,7 +9,7 @@ public class PessoaFisica extends Cliente {
     private String cpf;
     private int qtdMaxParcelas;
 
-    public PessoaFisica(String nome, Endereco endereco, LocalDate dataCadastro, String cpf, int maxParcelas) {
+    public PessoaFisica(String nome, LocalDate dataCadastro, String cpf, int maxParcelas, Endereco endereco) {
         super(nome, dataCadastro, endereco); // chama o construtor da classe pai
         this.cpf = cpf;
         this.qtdMaxParcelas = maxParcelas;

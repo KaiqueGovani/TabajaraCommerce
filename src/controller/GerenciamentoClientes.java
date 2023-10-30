@@ -33,6 +33,7 @@ public class GerenciamentoClientes {
             return false; // Cliente já existe
         }
         clientes.add(cliente);
+        // ! Logs para Depuração
         System.out.println("Cliente cadastrado com sucesso!");
         System.out.println(cliente.paraString());
         return true;
@@ -43,11 +44,11 @@ public class GerenciamentoClientes {
     }
 
     public PessoaFisica criarPessoaFisica(String nome, Endereco endereco, String cpf, int qtdMaxParcelas) {
-        return new PessoaFisica(nome, endereco, LocalDate.now(), cpf, qtdMaxParcelas);
+        return new PessoaFisica(nome, LocalDate.now(), cpf, qtdMaxParcelas, endereco);
     }
 
     public PessoaJuridica criarPessoaJuridica(String nome, Endereco endereco, String cnpj, String razaoSocial, int prazoPagamento) {
-        return new PessoaJuridica(nome, endereco, LocalDate.now(), cnpj, razaoSocial, prazoPagamento);
+        return new PessoaJuridica(nome, LocalDate.now(), cnpj, razaoSocial, prazoPagamento, endereco);
     }
 
     /**
@@ -121,4 +122,5 @@ public class GerenciamentoClientes {
         }
         return false;
     }
+
 }

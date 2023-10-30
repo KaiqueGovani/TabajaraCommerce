@@ -7,8 +7,7 @@ public class PessoaJuridica extends Cliente {
     private String razaoSocial;
     private int prazoPagamento; // em dias
 
-    public PessoaJuridica(String nome, Endereco endereco, LocalDate dataCadastro, String cnpj, String razaoSocial,
-            int prazoPagamento) {
+    public PessoaJuridica(String nome, LocalDate dataCadastro, String cnpj, String razaoSocial, int prazoPagamento, Endereco endereco) {
         super(nome, dataCadastro, endereco); // chama o construtor da classe pai
         this.cnpj = cnpj;
         this.razaoSocial = razaoSocial;
