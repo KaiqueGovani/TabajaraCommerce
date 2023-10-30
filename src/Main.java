@@ -20,13 +20,13 @@ public class Main {
         gerenciamentoCompras = new GerenciamentoCompras();
         gerenciamentoArquivos = new GerenciamentoArquivos(gerenciamentoClientes, gerenciamentoProdutos, gerenciamentoCompras);
         gerenciamentoArquivos.lerDados();
-        menu = new InterfaceUsuario(gerenciamentoClientes);
+        menu = new InterfaceUsuario(gerenciamentoClientes, gerenciamentoCompras);
     }
 
     public static void main(String[] args) {
         try {
             new Main().setup();
-
+            
             int opcaoInt = -1;
 
             do {
@@ -47,13 +47,14 @@ public class Main {
                                 menu.deletarClientePorNome();
                                 break;
                             case 4:
-                                // TODO 4. Cadastro de Produtos
+                                // TODO 4. Cadastro de Produtos - Jota
                                 break;
                             case 5:
-                                // TODO 5. Efetuação de uma compra
+                                // TODO 5. Efetuação de uma compra - Milton
+                                menu.efetuarCompra();
                                 break;
                             case 6:
-                                // TODO 6. Atualização da situação de pagamento de uma compra
+                                // TODO 6. Atualização da situação de pagamento de uma compra - Milton
                                 break;
                             case 7:
                                 // TODO 7. Relatórios
