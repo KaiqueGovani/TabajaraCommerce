@@ -19,6 +19,7 @@ public class Main {
         gerenciamentoProdutos = new GerenciamentoProdutos();
         gerenciamentoCompras = new GerenciamentoCompras();
         gerenciamentoArquivos = new GerenciamentoArquivos(gerenciamentoClientes, gerenciamentoProdutos, gerenciamentoCompras);
+        gerenciamentoArquivos.lerDados();
         menu = new InterfaceUsuario(gerenciamentoClientes);
     }
 
