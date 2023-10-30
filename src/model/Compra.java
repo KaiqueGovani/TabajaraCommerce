@@ -5,19 +5,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Compra {
-    private String identificador;
+    private int identificador;
     private LocalDate dataPedido;
     private double valorTotal;
-    private Cliente cliente;
+    private String docCliente;
     private List<ItemCompra> itensComprados;
     private double totalPago;
 
-    public Compra(String identificador, LocalDate dataPedido, double valorTotal, Cliente cliente,
+    public Compra(int identificador, LocalDate dataPedido, double valorTotal, String docCliente,
             List<ItemCompra> itensComprados, double totalPago) {
         this.identificador = identificador;
         this.dataPedido = dataPedido;
         this.valorTotal = valorTotal;
-        this.cliente = cliente;
+        this.docCliente = docCliente;
         this.itensComprados = new ArrayList<>();
         this.totalPago = totalPago;
     }
@@ -26,12 +26,12 @@ public class Compra {
         return identificador + "," + 
                dataPedido + "," + 
                valorTotal + "," + 
-               cliente + "," + 
+               docCliente + "," + 
                itensComprados + "," + 
                totalPago;
     }
 
-    public String pegarIdentificador() {
+    public int pegarIdentificador() {
         return identificador;
     }
 
@@ -43,8 +43,8 @@ public class Compra {
         return valorTotal;
     }
 
-    public Cliente cliente() {
-        return cliente;
+    public String cliente() {
+        return docCliente;
     }
 
     public void adicionarItem(ItemCompra item) {

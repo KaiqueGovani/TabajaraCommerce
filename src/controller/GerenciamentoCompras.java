@@ -1,5 +1,6 @@
 package controller;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +25,6 @@ public class GerenciamentoCompras {
      * @param novaCompra
      * @return true se a compra foi cadastrada, false caso contrário
      */
-    //TODO método para Cadastrar uma nova Compra
     public boolean cadastrarCompra(Compra novaCompra) {
         listCompras.add(novaCompra);
         System.out.println("Lista de Compra cadastrada com sucesso");
@@ -32,11 +32,14 @@ public class GerenciamentoCompras {
         return true;
     }
 
-    public ItemCompra criarCompra (int quantidade, String nomeProduto, double precoUnitario, double valorTotal) {
+    public Compra criarCompra(double valorTotal, String docCliente, List<ItemCompra> itensComprados, double totalPago){
+        return new Compra(listCompras.size() + 1, LocalDate.now(), valorTotal, docCliente, itensComprados, totalPago);
+    }
+
+    public ItemCompra criarItemCompra(int quantidade, String nomeProduto, double precoUnitario, double valorTotal) {
         return new ItemCompra(quantidade, nomeProduto, precoUnitario, valorTotal);
     }
 
-    //TODO Método que retorne a lista de compras como um new ArrayList
     public List<Compra> listarCompras() {
         return new ArrayList<>(this.listCompras); // Retorna uma lista de compras
     }
@@ -48,19 +51,16 @@ public class GerenciamentoCompras {
      * @param identificador
      * @return a compra se encontrar, null caso contrário
      */
-    public List<Compra> listarCompraPeloIdentificador(String identificador) {
+    public List<Compra> listarCompraPeloIdentificador(int identificador) {
         List<Compra> compraPeloIdentificador = new ArrayList<>();
         for (Compra novaCompra : listCompras) {
-            if (novaCompra.pegarIdentificador()
-                    .toLowerCase(null)      //Usado para converter string em minúsculas e não ser sensívvel a maiúsculas e minúsculas
-                    .startsWith(identificador.toLowerCase(null))) {     //Usado para verificar se uma string começa com otura string especificada
+            if (novaCompra.pegarIdentificador() == identificador){
                 compraPeloIdentificador.add(novaCompra);
             }
         }
         return compraPeloIdentificador;
     }
 
-    //TODO Método que retorna uma lista de compras que estão com o valor faltante maior que 0
     /**
      * Busca valor faltante por uma lista de compra
      * 
@@ -76,15 +76,16 @@ public class GerenciamentoCompras {
         }
         return comprasComValorFaltante;
     }
+    
     //TODO Método que atualiza o valor pago de uma compra
     /**
      * @param identificador o identificador da compra a ser atualizada
      * @param totalPago o novo valor total pago a ser atualizado
      * @return true se a atualização foi bem-sucedida, false caso contrário
      */
-    public boolean atualizaValorFaltante(String identificador, double totalPago) {
+    public boolean atualizaValorFaltante(int identificador, double totalPago) {
         for (Compra novaCompra : listCompras) {
-            if (novaCompra.pegarIdentificador().equals(identificador)) {
+            if (novaCompra.pegarIdentificador() == identificador) {
                 novaCompra.valorFaltante();
                 return true;
             }
