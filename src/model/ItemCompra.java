@@ -16,4 +16,12 @@ public class ItemCompra {
     public double pegarValorTotal() {
         return quantidade * precoUnitario;
     }
+
+    public String nomeProduto() {
+        return nomeProduto;
+    }
+
+    public double valorTotal() {
+        return valorTotal;
+    }
 }
