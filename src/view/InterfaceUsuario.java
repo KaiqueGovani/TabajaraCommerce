@@ -161,6 +161,50 @@ public class InterfaceUsuario {
         }
     }
 
+    public void cadastrarProduto() {
+        String menu = "1. Produto\n" +
+            "2. Produto Perecível\n" +
+            "Digite o número da opção desejada:";
+
+        String valorSelecionado = JOptionPane.showInputDialog(null, menu, "Cadastro de Produtos", JOptionPane.PLAIN_MESSAGE);
+
+        String titulo = "Cadastro de Produto";
+        if (valorSelecionado != null) {
+            try {
+                int opcaoInt = Integer.parseInt(valorSelecionado);
+                if (opcaoInt >= 1 && opcaoInt <= 2) {
+                    String nome = pegarValorDigitado("Digite o nome do produto:", titulo);
+                    double preco = Double.parseDouble(pegarValorDigitado("Digite o preço do produto:", titulo));
+                    int quantidade = Integer.parseInt(pegarValorDigitado("Digite a quantidade em estoque do produto:", titulo));
+
+                    switch (opcaoInt) {
+                        case 1: // Produto
+                            gProdutos.cadastrarProduto(gProdutos.criarProduto(nome, preco, quantidade));
+                            mostrarMensagem("Produto cadastrado com sucesso!", titulo);
+                            break;
+                         case 2: // Produto Perecível
+                            String dataValidade = pegarValorDigitado("Digite a data de validade do produto (dd/mm/yyyy):", titulo);
+                            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                            Date date = sdf.parse(datadValidade);
+                            Calendar cal = Calendar.getInstance();
+                            cal.setTime(date);
+
+                            gProdutos.cadastrarProduto(gProdutos.criarProdutoPerecivel(nome, preco, quantidade, cal));
+                            mostrarMensagem("Produto perecível cadastrado com sucesso!", titulo);
+                            break;
+                    default:
+                            break;
+                }
+            } else {
+                mostrarErro("Opção inválida!", "Erro");
+            }
+        } catch (NumberFormatException | ParseException e) {
+            mostrarErro("Entrada inválida!", "Erro");
+        }
+    }
+}
+
+
     public void efetuarCompra() {
         //TODO 5. Efetuação de uma compra
     }
