@@ -20,7 +20,7 @@ public class Main {
         gerenciamentoCompras = new GerenciamentoCompras();
         gerenciamentoArquivos = new GerenciamentoArquivos(gerenciamentoClientes, gerenciamentoProdutos, gerenciamentoCompras);
         gerenciamentoArquivos.lerDados();
-        menu = new InterfaceUsuario(gerenciamentoClientes, gerenciamentoCompras);
+        menu = new InterfaceUsuario(gerenciamentoClientes, gerenciamentoCompras, gerenciamentoProdutos);
     }
 
     public static void main(String[] args) {
@@ -55,6 +55,7 @@ public class Main {
                                 break;
                             case 6:
                                 // TODO 6. Atualização da situação de pagamento de uma compra - Milton
+                                menu.atualizarSituacaoPagamento();
                                 break;
                             case 7:
                                 // TODO 7. Relatórios
