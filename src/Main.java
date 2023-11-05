@@ -47,7 +47,7 @@ public class Main {
                                 menu.deletarClientePorNome();
                                 break;
                             case 4:
-                                // TODO 4. Cadastro de Produtos - Jota
+                                menu.cadastrarProduto();
                                 break;
                             case 5:
                                 // TODO 5. Efetuação de uma compra - Milton
