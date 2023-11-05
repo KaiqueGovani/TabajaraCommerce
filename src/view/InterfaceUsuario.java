@@ -1,9 +1,13 @@
 package view;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 import javax.swing.JOptionPane;
 
 import controller.GerenciamentoClientes;
 import controller.GerenciamentoCompras;
+import controller.GerenciamentoProdutos;
 
 /**
  * InterfaceUsuario
@@ -11,10 +15,12 @@ import controller.GerenciamentoCompras;
 public class InterfaceUsuario {
     private GerenciamentoClientes gClientes;
     private GerenciamentoCompras gCompras;
+    private GerenciamentoProdutos gProdutos;
 
-    public InterfaceUsuario(GerenciamentoClientes gClientes, GerenciamentoCompras gCompras) {
+    public InterfaceUsuario(GerenciamentoClientes gClientes, GerenciamentoCompras gCompras, GerenciamentoProdutos gProdutos) {
         this.gClientes = gClientes;
         this.gCompras = gCompras;
+        this.gProdutos = gProdutos;
     }
 
     public static void mostrarErro(String msg, String titulo) {
@@ -162,51 +168,124 @@ public class InterfaceUsuario {
     }
 
     public void cadastrarProduto() {
-        String menu = "1. Produto\n" +
-            "2. Produto Perecível\n" +
-            "Digite o número da opção desejada:";
+            String menu = "1. Produto\n" +
+                "2. Produto Perecível\n" +
+                "Digite o número da opção desejada:";
 
-        String valorSelecionado = JOptionPane.showInputDialog(null, menu, "Cadastro de Produtos", JOptionPane.PLAIN_MESSAGE);
+            String valorSelecionado = JOptionPane.showInputDialog(null, menu, "Cadastro de Produtos", JOptionPane.PLAIN_MESSAGE);
 
-        String titulo = "Cadastro de Produto";
+            String titulo = "Cadastro de Produto";
+            if (valorSelecionado != null) {
+                try {
+                    int opcaoInt = Integer.parseInt(valorSelecionado);
+                    if (opcaoInt >= 1 && opcaoInt <= 2) {
+                        String nome = pegarValorDigitado("Digite o nome do produto:", titulo);
+                        double preco = Double.parseDouble(pegarValorDigitado("Digite o preço do produto:", titulo));
+                        int quantidade = Integer.parseInt(pegarValorDigitado("Digite a quantidade em estoque do produto:", titulo));
+
+                        switch (opcaoInt) {
+                            case 1: // Produto
+                                gProdutos.cadastrarProduto(gProdutos.criarProduto(nome, preco, quantidade));
+                                mostrarMensagem("Produto cadastrado com sucesso!", titulo);
+                                break;
+                            case 2: // Produto Perecível
+                                String dataValidade = pegarValorDigitado("Digite a data de validade do produto (dd/mm/yyyy):", titulo);
+                                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                                Date date = sdf.parse(datadValidade);
+                                Calendar cal = Calendar.getInstance();
+                                cal.setTime(date);
+
+                                gProdutos.cadastrarProduto(gProdutos.criarProdutoPerecivel(nome, preco, quantidade, cal));
+                                mostrarMensagem("Produto perecível cadastrado com sucesso!", titulo);
+                                break;
+                        default:
+                                break;
+                    }
+                } else {
+                    mostrarErro("Opção inválida!", "Erro");
+                }
+            } catch (NumberFormatException | ParseException e) {
+                mostrarErro("Entrada inválida!", "Erro");
+            }
+        }
+    }
+
+    public void efetuarCompra() {
+        String menu = "Selecione o tipo de compra:\n" +
+                "1. Compra por CPF\n" +
+                "2. Compra por CNPJ\n" +
+                "Digite o número da opção desesejada:";
+
+        String valorSelecionado = JOptionPane.showInputDialog(null, menu, "Efetuação de uma compra", JOptionPane.PLAIN_MESSAGE);
+
+        String titulo = "Efetuar uma Compra";
         if (valorSelecionado != null) {
             try {
                 int opcaoInt = Integer.parseInt(valorSelecionado);
-                if (opcaoInt >= 1 && opcaoInt <= 2) {
-                    String nome = pegarValorDigitado("Digite o nome do produto:", titulo);
-                    double preco = Double.parseDouble(pegarValorDigitado("Digite o preço do produto:", titulo));
-                    int quantidade = Integer.parseInt(pegarValorDigitado("Digite a quantidade em estoque do produto:", titulo));
+                if (opcaoInt >=1 && opcaoInt <=2) {
+                    int quantidade = pegarValorDigitado("Digite a quantidade do produto:", titulo);
+                    String nomeProduto = pegarValorDigitado("Digite o nome do produto:", titulo);
+                    double precoUnitario = pegarValorDigitado("Digite o preço unitario:", titulo);
+                    int identificador = pegarValorDigitado("Digite o número do pedido", titulo);
 
                     switch (opcaoInt) {
-                        case 1: // Produto
-                            gProdutos.cadastrarProduto(gProdutos.criarProduto(nome, preco, quantidade));
-                            mostrarMensagem("Produto cadastrado com sucesso!", titulo);
-                            break;
-                         case 2: // Produto Perecível
-                            String dataValidade = pegarValorDigitado("Digite a data de validade do produto (dd/mm/yyyy):", titulo);
-                            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-                            Date date = sdf.parse(datadValidade);
-                            Calendar cal = Calendar.getInstance();
-                            cal.setTime(date);
+                        case 1: //Compra por CPF
+                        String cpf = pegarValorDigitado("Digite o CPF do cliente:", titulo);
+                        int qtdParcelas = Integer.parseInt(pegarValorDigitado("Digite a quantidade de parcelas da compra:", titulo));
 
-                            gProdutos.cadastrarProduto(gProdutos.criarProdutoPerecivel(nome, preco, quantidade, cal));
-                            mostrarMensagem("Produto perecível cadastrado com sucesso!", titulo);
+                            gCompras.efetuarCompra(gCompras.criarItemCompra(quantidade, nomeProduto, precoUnitario, pegarValorTotal(
+                                identificador,
+                                gCompras.criarCompra(valorTotal, docCliente, itensComprados, totalPago),
+                                cpf,
+                                qtdParcelas
+                            ));
+
+                            mostrarMensagem("Compra por CPF efetuada com sucesso!", titulo);
                             break;
-                    default:
+
+                        case 2: //Compra por CNPJ
+                        String cnpj = pegarValorDigitado("Digite o CNPJ do cliente:", titulo);
+                        String razaoSocial = pegarValorDigitado("Digite a razão social do cliente:", titulo);
+                        int prazodePagamento = Integer.parseInt(pegarValorDigitado("Digite o prazo de pagamento da compra:", titulo));
+
+                            gCompras.efetuarCompra(gCompras.criarItemCompra(quantidade, nomeProduto, precoUnitario, pegarValorTotal(
+                                identificador,
+                                gCompras.criarCompra(valorTotal, docCliente, itensComprados, totalPago),
+                                cnpj,
+                                prazodePagamento
+                            ));
+
+                            mostrarMensagem("Compra por CNPJ efetuada com sucesso!", titulo);
+                        default:
                             break;
+                    }
+                } else {
+                    mostrarErro("Opção inválida!", "Erro");
                 }
-            } else {
-                mostrarErro("Opção inválida!", "Erro");
+            } catch (NumberFormatException e) {
+                mostrarErro("Entrada inválida", "Erro");
             }
-        } catch (NumberFormatException | ParseException e) {
-            mostrarErro("Entrada inválida!", "Erro");
         }
     }
-}
 
+    public void atualizarSituacaoPagamento() {
+        String identificador = JOptionPane.showInputDialog(null, "Digite o identificador da compra:", "Atualizar Situação de Pagamento", JOptionPane.PLAIN_MESSAGE);
+        String valorPagoString = JOptionPane.showInputDialog(null, "Digite o valor pago:", "Atualizar Situação de Pagamento", JOptionPane.PLAIN_MESSAGE);
 
-    public void efetuarCompra() {
-        //TODO 5. Efetuação de uma compra
+        String titulo = "Atualizar situação de pagamento";
+        if (identificador != null && valorPagoString != null) {
+            try {
+                double valorPago = Double.parseDouble(valorPagoString);
+                boolean atualizacaoSucesso = gCompras.atualizaValorFaltante(0, valorPago);
+                if (atualizacaoSucesso) {
+                    mostrarMensagem("Valor pago atualizado com sucesso!", titulo);
+                } else {
+                    mostrarErro("Falha ao atualizar o valor pago. Verifique o identificador e tente novamente.", "Erro");
+                }
+            } catch (NumberFormatException e) {
+                mostrarErro("Valor pago inválido!", "Erro");
+            }
+        }
     }
 
 }
