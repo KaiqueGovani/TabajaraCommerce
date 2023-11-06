@@ -181,18 +181,24 @@ public class InterfaceUsuario {
                     if (opcaoInt >= 1 && opcaoInt <= 2) {
                         String nome = pegarValorDigitado("Digite o nome do produto:", titulo);
                         double preco = Double.parseDouble(pegarValorDigitado("Digite o preço do produto:", titulo));
-                        String descricao = Integer.parseInt(pegarValorDigitado("Digite a descrição do produto:", titulo));
+                        String descricao = pegarValorDigitado("Digite a descrição do produto:", titulo);
 
                         switch (opcaoInt) {
                             case 1: // Produto
+                                // ! A criação do produto deve ser feita dentro da classe de gProduto, crie um método lá, criarProduto que retorna um produto e use o aqui
                                 gProdutos.cadastrarProduto(new Produto(nome, preco, descricao));
                                 mostrarMensagem("Produto cadastrado com sucesso!", titulo);
                                 break;
                             case 2: // Produto Perecível
                                 String dataValidade = pegarValorDigitado("Digite a data de validade do produto (dd/mm/yyyy):", titulo);
+                                
+                                // ! Crie um método em gerenciamentoProdutos para criar um LocalDate apartir de uma string, e use ele aqui!
+                                // ! Para passar ao criarProdutoPerecivel abaixo
                                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
                                 LocalDate localDate = LocalDate.parse(dataValidade, formatter);
-
+                                
+                                // ! Mesma coisa que para o produto
+                                // ! A criação do produto perecível deve ser feita dentro da classe de gProduto, crie um método lá, criarProdutoPerecivel que retorna um produto perecivel e use o aqui
                                 gProdutos.cadastrarProduto(new ProdutoPerecivel(nome, preco, descricao, localDate));
                                 mostrarMensagem("Produto perecível cadastrado com sucesso!", titulo);
                                 break;
@@ -267,10 +273,14 @@ public class InterfaceUsuario {
     }
 
     public void atualizarSituacaoPagamento() {
+        String titulo = "Atualizar situação de pagamento";
+        
+        // ! Use a função pegarValorDigitado para pegar o valor digitado pelo usuário aqui!
+        
+        // ! Inteiro em vez de string
         String identificador = JOptionPane.showInputDialog(null, "Digite o identificador da compra:", "Atualizar Situação de Pagamento", JOptionPane.PLAIN_MESSAGE);
         String valorPagoString = JOptionPane.showInputDialog(null, "Digite o valor pago:", "Atualizar Situação de Pagamento", JOptionPane.PLAIN_MESSAGE);
 
-        String titulo = "Atualizar situação de pagamento";
         if (identificador != null && valorPagoString != null) {
             try {
                 double valorPago = Double.parseDouble(valorPagoString);
