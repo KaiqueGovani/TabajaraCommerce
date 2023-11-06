@@ -5,6 +5,11 @@ import java.time.LocalDate;
 public class ProdutoPerecivel extends Produto {
     private LocalDate dataDeValidade;
 
+    public ProdutoPerecivel(String nome, double preco, String descricao, LocalDate dataDeValidade){
+        super(nome,preco,descricao);
+        this.dataDeValidade = dataDeValidade;
+    }
+
     public LocalDate pegarDataDeValidade() {
         return dataDeValidade;
     }
