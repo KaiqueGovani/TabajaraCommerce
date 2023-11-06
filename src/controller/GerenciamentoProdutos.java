@@ -32,7 +32,7 @@ public class GerenciamentoProdutos {
     }
 
     public List<Produto> listarProdutos() {
-        return this.produtos; // !Criar cópia da lista para evitar que a lista original seja modificada.
+        return new ArrayList<>(this.produtos); // !Criar cópia da lista para evitar que a lista original seja modificada.
     }
 
     public boolean buscarPeloNome(String nome) {
