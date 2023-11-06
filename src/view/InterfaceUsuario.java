@@ -220,13 +220,16 @@ public class InterfaceUsuario {
                 "2. Compra por CNPJ\n" +
                 "Digite o número da opção desesejada:";
 
+        String titulo = "Efetuar uma Compra";
+        
+        //! Utilizar o método pegarValorDigitado para pegar o valor digitado pelo usuário aqui!
         String valorSelecionado = JOptionPane.showInputDialog(null, menu, "Efetuação de uma compra", JOptionPane.PLAIN_MESSAGE);
 
-        String titulo = "Efetuar uma Compra";
         if (valorSelecionado != null) {
             try {
                 int opcaoInt = Integer.parseInt(valorSelecionado);
                 if (opcaoInt >=1 && opcaoInt <=2) {
+                    //! O método retorna string, converta para o valor correto!
                     int quantidade = pegarValorDigitado("Digite a quantidade do produto:", titulo);
                     String nomeProduto = pegarValorDigitado("Digite o nome do produto:", titulo);
                     double precoUnitario = pegarValorDigitado("Digite o preço unitario:", titulo);
@@ -242,7 +245,7 @@ public class InterfaceUsuario {
                                 gCompras.criarCompra(valorTotal, docCliente, itensComprados, totalPago),
                                 cpf,
                                 qtdParcelas
-                            ));
+                            )));
 
                             mostrarMensagem("Compra por CPF efetuada com sucesso!", titulo);
                             break;
@@ -277,7 +280,7 @@ public class InterfaceUsuario {
         
         // ! Use a função pegarValorDigitado para pegar o valor digitado pelo usuário aqui!
         
-        // ! Inteiro em vez de string
+        // ! Identificador é um Inteiro em vez de string
         String identificador = JOptionPane.showInputDialog(null, "Digite o identificador da compra:", "Atualizar Situação de Pagamento", JOptionPane.PLAIN_MESSAGE);
         String valorPagoString = JOptionPane.showInputDialog(null, "Digite o valor pago:", "Atualizar Situação de Pagamento", JOptionPane.PLAIN_MESSAGE);
 
