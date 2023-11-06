@@ -181,21 +181,19 @@ public class InterfaceUsuario {
                     if (opcaoInt >= 1 && opcaoInt <= 2) {
                         String nome = pegarValorDigitado("Digite o nome do produto:", titulo);
                         double preco = Double.parseDouble(pegarValorDigitado("Digite o preço do produto:", titulo));
-                        int quantidade = Integer.parseInt(pegarValorDigitado("Digite a quantidade em estoque do produto:", titulo));
+                        String descricao = Integer.parseInt(pegarValorDigitado("Digite a descrição do produto:", titulo));
 
                         switch (opcaoInt) {
                             case 1: // Produto
-                                gProdutos.cadastrarProduto(gProdutos.criarProduto(nome, preco, quantidade));
+                                gProdutos.cadastrarProduto(new Produto(nome, preco, descricao));
                                 mostrarMensagem("Produto cadastrado com sucesso!", titulo);
                                 break;
                             case 2: // Produto Perecível
                                 String dataValidade = pegarValorDigitado("Digite a data de validade do produto (dd/mm/yyyy):", titulo);
-                                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-                                Date date = sdf.parse(datadValidade);
-                                Calendar cal = Calendar.getInstance();
-                                cal.setTime(date);
+                                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                                LocalDate localDate = LocalDate.parse(dataValidade, formatter);
 
-                                gProdutos.cadastrarProduto(gProdutos.criarProdutoPerecivel(nome, preco, quantidade, cal));
+                                gProdutos.cadastrarProduto(new ProdutoPerecivel(nome, preco, descricao, localDate));
                                 mostrarMensagem("Produto perecível cadastrado com sucesso!", titulo);
                                 break;
                         default:
@@ -204,7 +202,7 @@ public class InterfaceUsuario {
                 } else {
                     mostrarErro("Opção inválida!", "Erro");
                 }
-            } catch (NumberFormatException | ParseException e) {
+            } catch (NumberFormatException e) {
                 mostrarErro("Entrada inválida!", "Erro");
             }
         }
