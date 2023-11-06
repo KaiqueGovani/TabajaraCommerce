@@ -6,6 +6,12 @@ public class Produto {
     private String descricao;
     private double preco;
 
+    public Produto(String nome, double preco, String descricao){
+        this.nome = nome;
+        this.preco = preco;
+        this.descricao = descricao;
+    }
+
     public String paraString() {
         return "Produto: " +
                 ", Codigo: " + codigo +
