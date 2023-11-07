@@ -6,6 +6,7 @@ import java.util.List;
 
 import model.Compra;
 import model.ItemCompra;
+
 /**
  * GerenciamentoCompras
  */
@@ -25,15 +26,37 @@ public class GerenciamentoCompras {
      * @param novaCompra
      * @return true se a compra foi cadastrada, false caso contrário
      */
-    public boolean cadastrarCompra(Compra novaCompra) {
-        listCompras.add(novaCompra);
-        System.out.println("Lista de Compra cadastrada com sucesso");
-        System.out.println(novaCompra.paraString());
-        return true;
+    public int cadastrarCompra(String docCliente) {
+        try {
+            Compra novaCompra = new Compra(listCompras.size() + 1, LocalDate.now(), docCliente,
+                    new ArrayList<ItemCompra>());
+            listCompras.add(novaCompra);
+            System.out.println("Nova Compra Vazia criada com sucesso");
+
+            return novaCompra.pegarIdentificador();
+        } catch (Exception e) {
+            System.out.println("Erro ao cadastrar nova compra" + e.getMessage());
+            throw e;
+        }
     }
 
-    public Compra criarCompra(double valorTotal, String docCliente, List<ItemCompra> itensComprados, double totalPago){
-        return new Compra(listCompras.size() + 1, LocalDate.now(), valorTotal, docCliente, itensComprados, totalPago);
+    public void adicionarItemCompra(List<ItemCompra> itensComprados, ItemCompra itemCompra) {
+        try {
+            itensComprados.add(itemCompra);
+        } catch (Exception e) {
+            System.out.println("Erro ao adicionar item na lista de compras");
+            throw e;
+        }
+    }
+
+    public void adicionarItemCompraPorIdentificador(int identificador, ItemCompra itemCompra) {
+        Compra compra = buscarCompraPeloIdentificador(identificador);
+        if (compra != null) {
+            compra.adicionarItem(itemCompra);
+        } else {
+            System.out.println("Compra não encontrada");
+            throw new RuntimeException("Compra não encontrada");
+        }
     }
 
     public ItemCompra criarItemCompra(int quantidade, String nomeProduto, double precoUnitario, double valorTotal) {
@@ -44,21 +67,19 @@ public class GerenciamentoCompras {
         return new ArrayList<>(this.listCompras); // Retorna uma lista de compras
     }
 
-    //TODO Método que Busca uma compra pelo identificador e a retorna
     /**
      * Busca uma compra pelo identificador
      * 
      * @param identificador
      * @return a compra se encontrar, null caso contrário
      */
-    public List<Compra> listarCompraPeloIdentificador(int identificador) {
-        List<Compra> compraPeloIdentificador = new ArrayList<>();
-        for (Compra novaCompra : listCompras) {
-            if (novaCompra.pegarIdentificador() == identificador){
-                compraPeloIdentificador.add(novaCompra);
+    public Compra buscarCompraPeloIdentificador(int identificador) {
+        for (Compra compra : listCompras) {
+            if (compra.pegarIdentificador() == identificador) {
+                return compra;
             }
         }
-        return compraPeloIdentificador;
+        return null;
     }
 
     /**
@@ -76,20 +97,20 @@ public class GerenciamentoCompras {
         }
         return comprasComValorFaltante;
     }
-    
-    //TODO Método que atualiza o valor pago de uma compra
+
     /**
      * @param identificador o identificador da compra a ser atualizada
-     * @param totalPago o novo valor total pago a ser atualizado
+     * @param totalPago     o novo valor total pago a ser atualizado
      * @return true se a atualização foi bem-sucedida, false caso contrário
      */
     public boolean atualizaValorFaltante(int identificador, double totalPago) {
-        for (Compra novaCompra : listCompras) {
-            if (novaCompra.pegarIdentificador() == identificador) {
-                novaCompra.valorFaltante();
-                return true;
-            }
+        Compra compra = buscarCompraPeloIdentificador(identificador);
+        if (compra != null) {
+            compra.atualizarTotalPago(totalPago);
+            return true;
+        } else {
+            System.out.println("Compra não encontrada");
+            throw new RuntimeException("Compra não encontrada");
         }
-        return false;
     }
 }

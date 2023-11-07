@@ -7,43 +7,46 @@ import java.util.List;
 public class Compra {
     private int identificador;
     private LocalDate dataPedido;
-    private double valorTotal;
     private String docCliente;
     private List<ItemCompra> itensComprados;
-    private double totalPago;
+    private double valorTotal = 0;
+    private double totalPago = 0;
 
-    public Compra(int identificador, LocalDate dataPedido, double valorTotal, String docCliente,
-            List<ItemCompra> itensComprados, double totalPago) {
+    public Compra(int identificador, LocalDate dataPedido, String docCliente,
+            List<ItemCompra> itensComprados) {
         this.identificador = identificador;
         this.dataPedido = dataPedido;
-        this.valorTotal = valorTotal;
         this.docCliente = docCliente;
         this.itensComprados = new ArrayList<>();
-        this.totalPago = totalPago;
     }
 
     public String paraString() {
-        return identificador + "," + 
-               dataPedido + "," + 
-               valorTotal + "," + 
-               docCliente + "," + 
-               itensComprados + "," + 
-               totalPago;
+        return identificador + "," +
+                dataPedido + "," +
+                docCliente + "," +
+                itensComprados + "," +
+                pegarValorTotal() + "," +
+                totalPago;
+    }
+
+    public String paraStringFormatado() {
+        return "Identificador: " + identificador + "\n" +
+                "Data do Pedido: " + dataPedido + "\n" +
+                "Documento do Cliente: " + docCliente + "\n" +
+                "Itens Comprados: " + itensComprados + "\n" +
+                "Valor Total: " + pegarValorTotal() + "\n" +
+                "Total Pago: " + totalPago;
     }
 
     public int pegarIdentificador() {
         return identificador;
     }
 
-    public LocalDate  pegarDataPedido() {
+    public LocalDate pegarDataPedido() {
         return dataPedido;
     }
 
-    public double pegarTotal() {
-        return valorTotal;
-    }
-
-    public String cliente() {
+    public String pegarDocCliente() {
         return docCliente;
     }
 
@@ -52,14 +55,25 @@ public class Compra {
     }
 
     public double pegarValorTotal() {
-        double total = 0;
+        valorTotal = 0;
         for (ItemCompra item : itensComprados) {
-            total += item.pegarValorTotal();
+            valorTotal += item.pegarValorTotal();
         }
-        return total;
+        return valorTotal;
     }
 
     public double valorFaltante() {
         return pegarValorTotal() - totalPago;
+    }
+
+    public boolean atualizarTotalPago(double valor) {
+        if (valorFaltante() >= valor) {
+            System.out.println("Valor pago com sucesso");
+            totalPago += valor;
+            return true;
+        } else {
+            System.out.println("Valor pago maior que o valor faltante");
+            return false;
+        }
     }
 }
