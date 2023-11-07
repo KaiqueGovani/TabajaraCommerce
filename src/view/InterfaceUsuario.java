@@ -191,26 +191,14 @@ public class InterfaceUsuario {
 
                     switch (opcaoInt) {
                         case 1: // Produto
-                            // ! A criação do produto deve ser feita dentro da classe de gProduto, crie um
-                            // ! método lá, criarProduto que retorna um produto e use o aqui
-                            gProdutos.cadastrarProduto(new Produto(nome, preco, descricao));
+                            gProdutos.criarProduto(nome, preco, descricao);
                             mostrarMensagem("Produto cadastrado com sucesso!", titulo);
                             break;
                         case 2: // Produto Perecível
-                            String dataValidade = pegarValorDigitado(
-                                    "Digite a data de validade do produto (dd/mm/yyyy):", titulo);
-
-                            // ! Crie um método em gerenciamentoProdutos para criar um LocalDate apartir de
-                            // ! uma string, e use ele aqui!
-                            // ! Para passar ao criarProdutoPerecivel abaixo
-                            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-                            LocalDate localDate = LocalDate.parse(dataValidade, formatter);
-
-                            // ! Mesma coisa que para o produto
-                            // ! A criação do produto perecível deve ser feita dentro da classe de gProduto,
-                            // ! crie um método lá, criarProdutoPerecivel que retorna um produto perecivel e
-                            // ! use o aqui
-                            gProdutos.cadastrarProduto(new ProdutoPerecivel(nome, preco, descricao, localDate));
+                            String dataValidade = pegarValorDigitado("Digite a data de validade do produto (dd/mm/yyyy):", titulo);
+                            LocalDate dataValidadeLocalDate = gProdutos.criaLocalDate(dataValidade);
+                           
+                            gProdutos.criarProdutoPerecivel(nome, preco, descricao, dataValidadeLocalDate);
                             mostrarMensagem("Produto perecível cadastrado com sucesso!", titulo);
                             break;
                         default:
