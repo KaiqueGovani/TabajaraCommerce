@@ -8,8 +8,6 @@ import java.util.stream.Collectors;
 import model.Produto;
 import model.ProdutoPerecivel;
 
-// ! Estava faltando importar os módulos aqui em cima !
-
 
 //! Seria bom adicionar docstrings nos métodos, para facilitar a leitura do código.
 public class GerenciamentoProdutos {
@@ -32,8 +30,7 @@ public class GerenciamentoProdutos {
     }
 
     public List<Produto> listarProdutos() {
-        return new ArrayList<>(this.produtos); // !Criar cópia da lista para evitar que a lista original seja modificada.
-    }
+        return new ArrayList<>(this.produtos);
 
     public boolean buscarPeloNome(String nome) {
         return produtos.stream()
