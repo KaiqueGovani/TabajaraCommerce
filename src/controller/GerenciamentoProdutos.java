@@ -49,6 +49,22 @@ public class GerenciamentoProdutos {
         return produtosPereciveis;
     }
 
+    public List<ProdutoPerecivel> listarProdutosVencidos() {
+        LocalDate hoje = LocalDate.now();
+        List<ProdutoPerecivel> produtosVencidos = new ArrayList<>();
+
+        for (Produto produto : produtos) {
+            if (produto instanceof ProdutoPerecivel) {
+                ProdutoPerecivel produtoPerecivel = (ProdutoPerecivel) produto;
+                if (produtoPerecivel.getDataValidade().isBefore(hoje)) {
+                    produtosVencidos.add(produtoPerecivel);
+                }
+            }
+        }
+
+        return produtosVencidos;
+    }
+
     public Produto criarProduto(String nome, double preco, String descricao){
         Produto novoProduto = new Produto(nome, preco, descricao);
         produtos.add(novoProduto);
