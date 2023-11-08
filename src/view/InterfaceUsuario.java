@@ -1,8 +1,5 @@
 package view;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.swing.JOptionPane;
 
 import controller.GerenciamentoClientes;
@@ -196,9 +193,8 @@ public class InterfaceUsuario {
                             break;
                         case 2: // Produto Perecível
                             String dataValidade = pegarValorDigitado("Digite a data de validade do produto (dd/mm/yyyy):", titulo);
-                            LocalDate dataValidadeLocalDate = gProdutos.criaLocalDate(dataValidade);
                            
-                            gProdutos.criarProdutoPerecivel(nome, preco, descricao, dataValidadeLocalDate);
+                            gProdutos.criarProdutoPerecivel(nome, preco, descricao, gProdutos.criarLocalDate(dataValidade));
                             mostrarMensagem("Produto perecível cadastrado com sucesso!", titulo);
                             break;
                         default:

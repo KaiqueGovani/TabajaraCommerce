@@ -1,6 +1,7 @@
 package controller;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -31,6 +32,7 @@ public class GerenciamentoProdutos {
 
     public List<Produto> listarProdutos() {
         return new ArrayList<>(this.produtos);
+    }
 
     public boolean buscarPeloNome(String nome) {
         return produtos.stream()
@@ -58,14 +60,14 @@ public class GerenciamentoProdutos {
 
     public ProdutoPerecivel criarProdutoPerecivel(String nome, double preco, String descricao, LocalDate dataValidade){
         ProdutoPerecivel novoProdutoPerecivel = new ProdutoPerecivel(nome, preco, descricao, dataValidade);
-        listarProdutoPereciveis().add(novoProdutoPerecivel);
+        produtos.add(novoProdutoPerecivel);
         System.out.println("Produto perecivel adicionado com sucesso!");
 
         return novoProdutoPerecivel;
     }
 
     public LocalDate criarLocalDate(String dataString){
-        DateTimeFormatter formatter = DateTimeFormatter.offPatern("dd/MM/yyyy");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         return LocalDate.parse(dataString, formatter);
     }
 }
