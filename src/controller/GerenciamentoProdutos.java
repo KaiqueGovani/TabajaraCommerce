@@ -50,14 +50,12 @@ public class GerenciamentoProdutos {
     }
 
     public List<ProdutoPerecivel> listarProdutosVencidos() {
-        LocalDate hoje = LocalDate.now();
         List<ProdutoPerecivel> produtosVencidos = new ArrayList<>();
 
         for (Produto produto : produtos) {
             if (produto instanceof ProdutoPerecivel) {
-                ProdutoPerecivel produtoPerecivel = (ProdutoPerecivel) produto;
-                if (produtoPerecivel.getDataValidade().isBefore(hoje)) {
-                    produtosVencidos.add(produtoPerecivel);
+                if (((ProdutoPerecivel)produto).estaVencido()) {
+                    produtosVencidos.add((ProdutoPerecivel)produto);
                 }
             }
         }
