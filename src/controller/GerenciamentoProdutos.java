@@ -40,14 +40,13 @@ public class GerenciamentoProdutos {
     }
 
     public List<ProdutoPerecivel> listarProdutosPereciveis() {
-        LocalDate dataAtual = LocalDate.now();
-        //! Há maneiras mais simples e visíveis de fazer isso, igual em gerenciamentoClientes.
-        return produtos.stream()
-                .filter(produto -> produto instanceof ProdutoPerecivel)
-                .map(produto -> (ProdutoPerecivel) produto) // ! Talvez não faça sentido fazer esse cast, já que a linha de cima já garante que o produto é perecível.
-                .filter(produtoPerecivel -> produtoPerecivel.estaVencido()
-                        && produtoPerecivel.pegarDataDeValidade().isBefore(dataAtual)) //!Está vencido já é o suficiente, essa parte não tem necessidade.
-                .collect(Collectors.toList());
+        List<ProdutoPerecivel> produtosPereciveis = new ArrayList<>();
+        for (Produto produto : produtos) {
+            if (produto instanceof ProdutoPerecivel) {
+                produtosPereciveis.add((ProdutoPerecivel) produto);
+            }
+        }
+        return produtosPereciveis;
     }
 
     public Produto criarProduto(String nome, double preco, String descricao){
