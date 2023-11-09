@@ -100,6 +100,53 @@ public class GerenciamentoArquivos {
         }
     }
 
+public void salvarProdutos(List<Produto> produtos) {
+    try (BufferedWriter bw = new BufferedWriter(new FileWriter(fprodutos))) {
+        for (Produto produto : produtos) {
+            bw.write(produto.paraString()); // escreve o produto no arquivo
+            bw.newLine(); // adiciona um \n no final
+        }
+    } catch (Exception e) {
+        throw new RuntimeException("Erro ao salvar produtos: " + e.getMessage());
+    }
+}
+
+public void lerProdutos(){
+    try (BufferedReader br = new BufferedReader(new FileReader(fprodutos))) {
+        while (br.ready()){
+            String linha = br.readLine();
+            String[] dados = linha.split(",");
+
+            // Verifica se o produto é perecível ou não
+            if (dados.length == 3) { // Produto não perecível
+                String nome = dados[0];
+                double preco = Double.parseDouble(dados[1]);
+                String descricao = dados[2];
+
+                Produto produto = new Produto(nome, preco, descricao);
+
+                if (produto != null){
+                    gerenciamentoProdutos.cadastrarProdutos(produto);
+                }
+            } else if (dados.length == 4) { // Produto perecível
+                String nome = dados[0];
+                double preco = Double.parseDouble(dados[1]);
+                String descricao = dados[2];
+                LocalDate dataValidade = LocalDate.parse(dados[3]);
+
+                ProdutoPerecivel produto = new ProdutoPerecivel(nome, preco, descricao, dataValidade);
+
+                if (produto != null){
+                    gerenciamentoProdutos.cadastrarProdutos(produto);
+                }
+            } else {
+                throw new RuntimeException("Formato de dados inválido.");
+            }
+        }
+    } catch (Exception e) {
+        throw new RuntimeException("Erro ao ler produtos: " + e.getMessage());
+    }
+}
     // TODO Ler e Salvar comprar do arquivo dadosCompras.txt
     // TODO Ler e Salvar produtos do arquivo dadosProdutos.txt
 }
