@@ -13,6 +13,10 @@ public class ItemCompra {
         this.valorTotal = quantidade * precoUnitario;
     }
 
+    public String toString() {
+        return " " + nomeProduto + " " + quantidade + " " + precoUnitario;
+    }
+
     public double pegarValorTotal() {
         return quantidade * precoUnitario;
     }
