@@ -48,12 +48,16 @@ public class GerenciamentoArquivos {
     
     public void salvarDados() {
         salvarClientes(gerenciamentoClientes.listarClientes());
-        //TODO salvarCompras(), salvarProdutos();
+        salvarCompras(gerenciamentoCompras.listarCompras());
+        salvarProdutos(gerenciamentoProdutos.listarProdutos());
+        //TODO salvarProdutos();
     }
 
     public void lerDados(){
         lerClientes();
-        //TODO lerCompras(), lerProdutos();
+        lerCompras();
+        lerProdutos();
+        //TODO lerProdutos();
     }
 
     public void salvarClientes(List<Cliente> clientes) {
