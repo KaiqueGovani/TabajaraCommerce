@@ -242,7 +242,7 @@ public class InterfaceUsuario {
             } else {
                 throw new Exception("Erro ao cadastrar compra");
             }
-            mostrarMensagem("Compra por CPF efetuada com sucesso!", titulo);
+            mostrarMensagem("Compra efetuada com sucesso!", titulo);
         } catch (Exception e) {
             System.out.println(e.getMessage());
             mostrarErro("Erro ao efetuar compra", "Erro");
@@ -266,24 +266,17 @@ public class InterfaceUsuario {
     public void atualizarSituacaoPagamento() {
         String titulo = "Atualizar situação de pagamento";
 
-        // ! Use a função pegarValorDigitado para pegar o valor digitado pelo usuário
-        // ! Nessas 2 linhas abaixo!
+        int identificador = Integer.parseInt(pegarValorDigitado("Digite o identificador da compra", titulo));
+        String valorPagoString = pegarValorDigitado("Digite o valor a pagar", titulo);
 
-        // ! Identificador é um Inteiro em vez de string
-        String identificador = JOptionPane.showInputDialog(null, "Digite o identificador da compra:",
-                "Atualizar Situação de Pagamento", JOptionPane.PLAIN_MESSAGE);
-        String valorPagoString = JOptionPane.showInputDialog(null, "Digite o valor pago:",
-                "Atualizar Situação de Pagamento", JOptionPane.PLAIN_MESSAGE);
-
-        if (identificador != null && valorPagoString != null) {
+        if (identificador != 0 && valorPagoString != null) {
             try {
                 double valorPago = Double.parseDouble(valorPagoString);
-                boolean atualizacaoSucesso = gCompras.atualizaValorFaltante(0, valorPago);
+                boolean atualizacaoSucesso = gCompras.atualizaValorFaltante(identificador, valorPago);
                 if (atualizacaoSucesso) {
                     mostrarMensagem("Valor pago atualizado com sucesso!", titulo);
                 } else {
-                    mostrarErro("Falha ao atualizar o valor pago. Verifique o identificador e tente novamente.",
-                            "Erro");
+                    mostrarErro("Falha ao atualizar o valor pago. Verifique o identificador e tente novamente.", "Erro");
                 }
             } catch (NumberFormatException e) {
                 mostrarErro("Valor pago inválido!", "Erro");
