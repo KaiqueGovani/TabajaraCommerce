@@ -10,7 +10,9 @@ import java.time.LocalDate;
 import java.util.List;
 
 import model.Cliente;
+import model.Compra;
 import model.Endereco;
+import model.ItemCompra;
 import model.PessoaFisica;
 import model.PessoaJuridica;
 
