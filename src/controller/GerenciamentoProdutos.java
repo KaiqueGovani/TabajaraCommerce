@@ -62,17 +62,15 @@ public class GerenciamentoProdutos {
 
     public Produto criarProduto(String nome, double preco, String descricao){
         Produto novoProduto = new Produto(nome, preco, descricao);
-        produtos.add(novoProduto);
         System.out.println("Produto criado com sucesso!");
-
+        novoProduto.setarCodigo(produtos.size() + 1);
         return novoProduto;
     }
 
     public ProdutoPerecivel criarProdutoPerecivel(String nome, double preco, String descricao, LocalDate dataValidade){
         ProdutoPerecivel novoProdutoPerecivel = new ProdutoPerecivel(nome, preco, descricao, dataValidade);
-        produtos.add(novoProdutoPerecivel);
         System.out.println("Produto perecivel adicionado com sucesso!");
-
+        novoProdutoPerecivel.setarCodigo(produtos.size() + 1);
         return novoProdutoPerecivel;
     }
 

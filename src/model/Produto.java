@@ -12,12 +12,26 @@ public class Produto {
         this.descricao = descricao;
     }
 
-    public String paraString() {
+    public Produto(int codigo, String nome, double preco, String descricao){
+        this.codigo = codigo;
+        this.nome = nome;
+        this.preco = preco;
+        this.descricao = descricao;
+    }
+
+    public String paraStringFormatado() {
         return "Produto: " +
                 ", Codigo: " + codigo +
                 ", Nome: " + nome +
                 ", Descricao: " + descricao +
                 ", Preco: " + preco;
+    }
+
+    public String paraString() {
+        return codigo + "," +
+                nome + "," +
+                descricao + "," +
+                preco;
     }
 
     public int pegarCodigo() {

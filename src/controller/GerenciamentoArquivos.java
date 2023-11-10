@@ -127,23 +127,25 @@ public class GerenciamentoArquivos {
                 String[] dados = linha.split(",");
 
                 // Verifica se o produto é perecível ou não
-                if (dados.length == 3) { // Produto não perecível
-                    String nome = dados[0];
-                    double preco = Double.parseDouble(dados[1]);
+                if (dados.length == 4) { // Produto não perecível
+                    int codigo = Integer.parseInt(dados[0]);
+                    String nome = dados[1];
                     String descricao = dados[2];
-
-                    Produto produto = new Produto(nome, preco, descricao);
+                    double preco = Double.parseDouble(dados[3]);
+                    
+                    Produto produto = new Produto(codigo, nome, preco, descricao);
 
                     if (produto != null) {
                         gerenciamentoProdutos.cadastrarProdutos(produto);
                     }
-                } else if (dados.length == 4) { // Produto perecível
-                    String nome = dados[0];
-                    double preco = Double.parseDouble(dados[1]);
+                } else if (dados.length == 5) { // Produto perecível
+                    int codigo = Integer.parseInt(dados[0]);
+                    String nome = dados[1];
                     String descricao = dados[2];
-                    LocalDate dataValidade = LocalDate.parse(dados[3]);
+                    double preco = Double.parseDouble(dados[3]);
+                    LocalDate dataValidade = LocalDate.parse(dados[4]);
 
-                    ProdutoPerecivel produto = new ProdutoPerecivel(nome, preco, descricao, dataValidade);
+                    ProdutoPerecivel produto = new ProdutoPerecivel(codigo, nome, preco, descricao, dataValidade);
 
                     if (produto != null) {
                         gerenciamentoProdutos.cadastrarProdutos(produto);

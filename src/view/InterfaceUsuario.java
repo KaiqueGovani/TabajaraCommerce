@@ -188,13 +188,13 @@ public class InterfaceUsuario {
 
                     switch (opcaoInt) {
                         case 1: // Produto
-                            gProdutos.criarProduto(nome, preco, descricao);
+                            gProdutos.cadastrarProdutos(gProdutos.criarProduto(nome, preco, descricao));
                             mostrarMensagem("Produto cadastrado com sucesso!", titulo);
                             break;
                         case 2: // Produto Perecível
                             String dataValidade = pegarValorDigitado("Digite a data de validade do produto (dd/mm/yyyy):", titulo);
                            
-                            gProdutos.criarProdutoPerecivel(nome, preco, descricao, gProdutos.criarLocalDate(dataValidade));
+                            gProdutos.cadastrarProdutos(gProdutos.criarProdutoPerecivel(nome, preco, descricao, gProdutos.criarLocalDate(dataValidade)));
                             mostrarMensagem("Produto perecível cadastrado com sucesso!", titulo);
                             break;
                         default:

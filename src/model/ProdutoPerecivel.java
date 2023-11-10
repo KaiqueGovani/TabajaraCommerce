@@ -2,11 +2,18 @@ package model;
 
 import java.time.LocalDate;
 
+// ! Seria interessante verificar a data atual antes de registrar uma data de validade
+
 public class ProdutoPerecivel extends Produto {
     private LocalDate dataDeValidade;
 
     public ProdutoPerecivel(String nome, double preco, String descricao, LocalDate dataDeValidade){
         super(nome,preco,descricao);
+        this.dataDeValidade = dataDeValidade;
+    }
+
+    public ProdutoPerecivel(int codigo, String nome, double preco, String descricao, LocalDate dataDeValidade){
+        super(codigo,nome,preco,descricao);
         this.dataDeValidade = dataDeValidade;
     }
 
@@ -24,8 +31,14 @@ public class ProdutoPerecivel extends Produto {
     }
 
     @Override
-    public String paraString() {
+    public String paraStringFormatado() {
         return super.paraString() +
                 ", Data De Validade: " + dataDeValidade;
+    }
+
+    @Override
+    public String paraString() {
+        return super.paraString() + "," +
+                dataDeValidade;
     }
 }
