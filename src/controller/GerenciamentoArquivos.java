@@ -111,42 +111,86 @@ public void salvarProdutos(List<Produto> produtos) {
     }
 }
 
-public void lerProdutos(){
-    try (BufferedReader br = new BufferedReader(new FileReader(fprodutos))) {
-        while (br.ready()){
-            String linha = br.readLine();
-            String[] dados = linha.split(",");
-
-            // Verifica se o produto é perecível ou não
-            if (dados.length == 3) { // Produto não perecível
-                String nome = dados[0];
-                double preco = Double.parseDouble(dados[1]);
-                String descricao = dados[2];
-
-                Produto produto = new Produto(nome, preco, descricao);
-
-                if (produto != null){
-                    gerenciamentoProdutos.cadastrarProdutos(produto);
+    public void lerProdutos(){
+        try (BufferedReader br = new BufferedReader(new FileReader(fprodutos))) {
+            while (br.ready()){
+                String linha = br.readLine();
+                String[] dados = linha.split(",");
+    
+                // Verifica se o produto é perecível ou não
+                if (dados.length == 3) { // Produto não perecível
+                    String nome = dados[0];
+                    double preco = Double.parseDouble(dados[1]);
+                    String descricao = dados[2];
+    
+                    Produto produto = new Produto(nome, preco, descricao);
+    
+                    if (produto != null){
+                        gerenciamentoProdutos.cadastrarProdutos(produto);
+                    }
+                } else if (dados.length == 4) { // Produto perecível
+                    String nome = dados[0];
+                    double preco = Double.parseDouble(dados[1]);
+                    String descricao = dados[2];
+                    LocalDate dataValidade = LocalDate.parse(dados[3]);
+    
+                    ProdutoPerecivel produto = new ProdutoPerecivel(nome, preco, descricao, dataValidade);
+    
+                    if (produto != null){
+                        gerenciamentoProdutos.cadastrarProdutos(produto);
+                    }
+                } else {
+                    throw new RuntimeException("Formato de dados inválido.");
                 }
-            } else if (dados.length == 4) { // Produto perecível
-                String nome = dados[0];
-                double preco = Double.parseDouble(dados[1]);
-                String descricao = dados[2];
-                LocalDate dataValidade = LocalDate.parse(dados[3]);
-
-                ProdutoPerecivel produto = new ProdutoPerecivel(nome, preco, descricao, dataValidade);
-
-                if (produto != null){
-                    gerenciamentoProdutos.cadastrarProdutos(produto);
-                }
-            } else {
-                throw new RuntimeException("Formato de dados inválido.");
             }
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao ler produtos: " + e.getMessage());
         }
-    } catch (Exception e) {
-        throw new RuntimeException("Erro ao ler produtos: " + e.getMessage());
     }
-}
+
+    public void salvarCompras(List<Compra> compras) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(fcompras))) {
+            for (Compra compra : compras) {
+                bw.write(compra.paraString()); // escreve a compra no arquivo
+                bw.newLine(); //adiciona um \n no final
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao salvar compra: " + e.getMessage());
+        }
+    }
+
+    public void lerCompras() {
+        try (BufferedReader br = new BufferedReader(new FileReader(fcompras))) {
+            while (br.ready()) {
+                String linha = br.readLine();
+                String[] dados = linha.split(",");
+
+                // Criar compra a partir dos dados
+                int identificador = Integer.parseInt(dados[0]);
+                LocalDate data = LocalDate.parse(dados[1]);
+                String docCliente = dados[2];
+                double valorTotal = Double.parseDouble(dados[3]);
+                double totalPago = Double.parseDouble(dados[4]);
+                List<ItemCompra> itensComprados = new ArrayList<>();
+
+                // Adicionar itens comprados à lista
+                for (int i = 7; i < dados.length; i += 3) {
+                    String nomeProduto = dados[i];
+                    int quantidade = Integer.parseInt(dados[i + 1]);
+                    double precoUnitario = Double.parseDouble(dados[i + 2]);
+                    itensComprados.add(new ItemCompra(identificador, nomeProduto, quantidade, precoUnitario));
+                }
+
+                Compra compra = new Compra(identificador, data, docCliente, itensComprados, valorTotal, totalPago);
+
+                if (compra != null) {
+                    gerenciamentoCompras.cadastrarCompra(docCliente);
+                }
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao ler compras: " + e.getMessage());
+        }
+    }
     // TODO Ler e Salvar comprar do arquivo dadosCompras.txt
     // TODO Ler e Salvar produtos do arquivo dadosProdutos.txt
 }
