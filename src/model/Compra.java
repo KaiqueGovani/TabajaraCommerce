@@ -24,18 +24,18 @@ public class Compra {
         return identificador + "," +
                 dataPedido + "," +
                 docCliente + "," +
-                itensComprados + "," +
                 pegarValorTotal() + "," +
-                totalPago;
+                totalPago + "," +
+                itensComprados;
     }
 
     public String paraStringFormatado() {
         return "Identificador: " + identificador + "\n" +
                 "Data do Pedido: " + dataPedido + "\n" +
                 "Documento do Cliente: " + docCliente + "\n" +
-                "Itens Comprados: " + itensComprados + "\n" +
                 "Valor Total: " + pegarValorTotal() + "\n" +
-                "Total Pago: " + totalPago;
+                "Total Pago: " + totalPago + "\n" +
+                "Itens Comprados: " + itensComprados; 
     }
 
     public int pegarIdentificador() {
