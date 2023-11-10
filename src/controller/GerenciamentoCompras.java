@@ -40,6 +40,15 @@ public class GerenciamentoCompras {
         }
     }
 
+    public void criarCompraExistente(Compra compra) {
+        try {
+            listCompras.add(compra);
+        } catch (Exception e) {
+            System.out.println("Erro ao criar compra existente");
+            throw e;
+        }
+    }
+
     public void adicionarItemCompra(List<ItemCompra> itensComprados, ItemCompra itemCompra) {
         try {
             itensComprados.add(itemCompra);

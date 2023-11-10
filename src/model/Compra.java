@@ -20,6 +20,16 @@ public class Compra {
         this.itensComprados = new ArrayList<>();
     }
 
+    public Compra(int identificador, LocalDate dataPedido, String docCliente,
+            List<ItemCompra> itensComprados, double valorTotal, double totalPago) {
+        this.identificador = identificador;
+        this.dataPedido = dataPedido;
+        this.docCliente = docCliente;
+        this.itensComprados = new ArrayList<>();
+        this.valorTotal = valorTotal;
+        this.totalPago = totalPago;
+    }
+
     public String paraString() {
         return identificador + "," +
                 dataPedido + "," +

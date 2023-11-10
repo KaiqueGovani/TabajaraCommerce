@@ -7,6 +7,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import model.Cliente;
@@ -15,6 +16,8 @@ import model.Endereco;
 import model.ItemCompra;
 import model.PessoaFisica;
 import model.PessoaJuridica;
+import model.Produto;
+import model.ProdutoPerecivel;
 
 public class GerenciamentoArquivos {
     GerenciamentoClientes gerenciamentoClientes;
@@ -36,7 +39,7 @@ public class GerenciamentoArquivos {
     }
 
     public void setupArquivos() {
-       try {
+        try {
             // Cria os arquivos caso não existam
             fclientes.createNewFile();
             fcompras.createNewFile();
@@ -45,19 +48,17 @@ public class GerenciamentoArquivos {
             throw new RuntimeException("Erro ao criar arquivos de dados: " + e.getMessage());
         }
     }
-    
+
     public void salvarDados() {
         salvarClientes(gerenciamentoClientes.listarClientes());
         salvarCompras(gerenciamentoCompras.listarCompras());
         salvarProdutos(gerenciamentoProdutos.listarProdutos());
-        //TODO salvarProdutos();
     }
 
-    public void lerDados(){
+    public void lerDados() {
         lerClientes();
         lerCompras();
         lerProdutos();
-        //TODO lerProdutos();
     }
 
     public void salvarClientes(List<Cliente> clientes) {
@@ -71,9 +72,9 @@ public class GerenciamentoArquivos {
         }
     }
 
-    public void lerClientes(){
+    public void lerClientes() {
         try (BufferedReader br = new BufferedReader(new FileReader(fclientes))) {
-            while (br.ready()){
+            while (br.ready()) {
                 String linha = br.readLine();
                 String[] dados = linha.split(",");
 
@@ -90,14 +91,16 @@ public class GerenciamentoArquivos {
                 String cidade = dados[dados.length - 2];
                 String estado = dados[dados.length - 1];
 
-                if ("PF".equals(tipo)){
-                    cliente = new PessoaFisica(nome, data, documento, Integer.parseInt(dados[4]), new Endereco(rua, numero, bairro, cep, cidade, estado));
+                if ("PF".equals(tipo)) {
+                    cliente = new PessoaFisica(nome, data, documento, Integer.parseInt(dados[4]),
+                            new Endereco(rua, numero, bairro, cep, cidade, estado));
                 }
-                if ("PJ".equals(tipo)){
-                    cliente = new PessoaJuridica(nome, data, documento, dados[4], Integer.parseInt(dados[5]), new Endereco(rua, numero, bairro, cep, cidade, estado));
+                if ("PJ".equals(tipo)) {
+                    cliente = new PessoaJuridica(nome, data, documento, dados[4], Integer.parseInt(dados[5]),
+                            new Endereco(rua, numero, bairro, cep, cidade, estado));
                 }
 
-                if (cliente != null){
+                if (cliente != null) {
                     gerenciamentoClientes.cadastrarCliente(cliente);
                 }
             }
@@ -106,32 +109,32 @@ public class GerenciamentoArquivos {
         }
     }
 
-public void salvarProdutos(List<Produto> produtos) {
-    try (BufferedWriter bw = new BufferedWriter(new FileWriter(fprodutos))) {
-        for (Produto produto : produtos) {
-            bw.write(produto.paraString()); // escreve o produto no arquivo
-            bw.newLine(); // adiciona um \n no final
+    public void salvarProdutos(List<Produto> produtos) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(fprodutos))) {
+            for (Produto produto : produtos) {
+                bw.write(produto.paraString()); // escreve o produto no arquivo
+                bw.newLine(); // adiciona um \n no final
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao salvar produtos: " + e.getMessage());
         }
-    } catch (Exception e) {
-        throw new RuntimeException("Erro ao salvar produtos: " + e.getMessage());
     }
-}
 
-    public void lerProdutos(){
+    public void lerProdutos() {
         try (BufferedReader br = new BufferedReader(new FileReader(fprodutos))) {
-            while (br.ready()){
+            while (br.ready()) {
                 String linha = br.readLine();
                 String[] dados = linha.split(",");
-    
+
                 // Verifica se o produto é perecível ou não
                 if (dados.length == 3) { // Produto não perecível
                     String nome = dados[0];
                     double preco = Double.parseDouble(dados[1]);
                     String descricao = dados[2];
-    
+
                     Produto produto = new Produto(nome, preco, descricao);
-    
-                    if (produto != null){
+
+                    if (produto != null) {
                         gerenciamentoProdutos.cadastrarProdutos(produto);
                     }
                 } else if (dados.length == 4) { // Produto perecível
@@ -139,10 +142,10 @@ public void salvarProdutos(List<Produto> produtos) {
                     double preco = Double.parseDouble(dados[1]);
                     String descricao = dados[2];
                     LocalDate dataValidade = LocalDate.parse(dados[3]);
-    
+
                     ProdutoPerecivel produto = new ProdutoPerecivel(nome, preco, descricao, dataValidade);
-    
-                    if (produto != null){
+
+                    if (produto != null) {
                         gerenciamentoProdutos.cadastrarProdutos(produto);
                     }
                 } else {
@@ -158,7 +161,7 @@ public void salvarProdutos(List<Produto> produtos) {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(fcompras))) {
             for (Compra compra : compras) {
                 bw.write(compra.paraString()); // escreve a compra no arquivo
-                bw.newLine(); //adiciona um \n no final
+                bw.newLine(); // adiciona um \n no final
             }
         } catch (Exception e) {
             throw new RuntimeException("Erro ao salvar compra: " + e.getMessage());
@@ -180,7 +183,7 @@ public void salvarProdutos(List<Produto> produtos) {
                 List<ItemCompra> itensComprados = new ArrayList<>();
 
                 // Adicionar itens comprados à lista
-                for (int i = 7; i < dados.length; i += 3) {
+                for (int i = 5; i < dados.length; i += 3) {
                     String nomeProduto = dados[i];
                     int quantidade = Integer.parseInt(dados[i + 1]);
                     double precoUnitario = Double.parseDouble(dados[i + 2]);
@@ -190,13 +193,11 @@ public void salvarProdutos(List<Produto> produtos) {
                 Compra compra = new Compra(identificador, data, docCliente, itensComprados, valorTotal, totalPago);
 
                 if (compra != null) {
-                    gerenciamentoCompras.cadastrarCompra(docCliente);
+                    gerenciamentoCompras.criarCompraExistente(compra);
                 }
             }
         } catch (Exception e) {
             throw new RuntimeException("Erro ao ler compras: " + e.getMessage());
         }
     }
-    // TODO Ler e Salvar comprar do arquivo dadosCompras.txt
-    // TODO Ler e Salvar produtos do arquivo dadosProdutos.txt
 }
