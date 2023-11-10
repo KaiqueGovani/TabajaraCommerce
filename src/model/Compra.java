@@ -12,6 +12,7 @@ public class Compra {
     private double valorTotal = 0;
     private double totalPago = 0;
 
+    // Contrutor para criar uma compra vazia
     public Compra(int identificador, LocalDate dataPedido, String docCliente,
             List<ItemCompra> itensComprados) {
         this.identificador = identificador;
@@ -20,12 +21,13 @@ public class Compra {
         this.itensComprados = new ArrayList<>();
     }
 
+    // Contrutor para criar uma compra existente
     public Compra(int identificador, LocalDate dataPedido, String docCliente,
             List<ItemCompra> itensComprados, double valorTotal, double totalPago) {
         this.identificador = identificador;
         this.dataPedido = dataPedido;
         this.docCliente = docCliente;
-        this.itensComprados = new ArrayList<>();
+        this.itensComprados = itensComprados;
         this.valorTotal = valorTotal;
         this.totalPago = totalPago;
     }
@@ -36,7 +38,7 @@ public class Compra {
                 docCliente + "," +
                 pegarValorTotal() + "," +
                 totalPago + "," +
-                itensComprados;
+                pegarItensComprados();
     }
 
     public String paraStringFormatado() {
@@ -44,8 +46,8 @@ public class Compra {
                 "Data do Pedido: " + dataPedido + "\n" +
                 "Documento do Cliente: " + docCliente + "\n" +
                 "Valor Total: " + pegarValorTotal() + "\n" +
-                "Total Pago: " + totalPago + "\n" +
-                "Itens Comprados: " + itensComprados; 
+                "Total Pago: " + totalPago + "\n\n" +
+                "Itens Comprados: \n" + pegarItensCompradosFormatado() + "\n"; 
     }
 
     public int pegarIdentificador() {
@@ -72,12 +74,12 @@ public class Compra {
         return valorTotal;
     }
 
-    public double valorFaltante() {
+    public double pegarValorFaltante() {
         return pegarValorTotal() - totalPago;
     }
 
     public boolean atualizarTotalPago(double valor) {
-        if (valorFaltante() >= valor) {
+        if (pegarValorFaltante() >= valor) {
             System.out.println("Valor pago com sucesso");
             totalPago += valor;
             return true;
@@ -85,5 +87,25 @@ public class Compra {
             System.out.println("Valor pago maior que o valor faltante");
             return false;
         }
+    }
+
+    public String pegarItensCompradosFormatado() {
+        String itens = "";
+        for (ItemCompra item : itensComprados) {
+            itens += item.paraStringFormatado();
+            itens += "\n";
+        }
+        return itens;
+    }
+
+    public String pegarItensComprados() {
+        String itens = "";
+        for (int i = 0; i < itensComprados.size(); i++) {
+            itens += itensComprados.get(i).paraString();
+            if (i < itensComprados.size() - 1) {
+                itens += ",";
+            }
+        }
+        return itens;
     }
 }

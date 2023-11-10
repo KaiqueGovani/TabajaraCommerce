@@ -13,8 +13,17 @@ public class ItemCompra {
         this.valorTotal = quantidade * precoUnitario;
     }
 
-    public String toString() {
-        return " " + nomeProduto + " " + quantidade + " " + precoUnitario;
+    public String paraString() {
+        return nomeProduto + "," +
+                quantidade + "," +
+                precoUnitario;
+    }
+
+    public String paraStringFormatado() {
+        return "Nome do Produto: " + nomeProduto + "\n" +
+                "Quantidade: " + quantidade + "\n" +
+                "Preço Unitário: " + precoUnitario + "\n" +
+                "Valor Total: " + pegarValorTotal() + "\n";
     }
 
     public double pegarValorTotal() {

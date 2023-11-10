@@ -100,7 +100,7 @@ public class GerenciamentoCompras {
     public List<Compra> listaComprasComValorFaltante(double valorFaltante) {
         List<Compra> comprasComValorFaltante = new ArrayList<>();
         for (Compra novaCompra : listCompras) {
-            if (novaCompra.valorFaltante() > 0) {
+            if (novaCompra.pegarValorFaltante() > 0) {
                 comprasComValorFaltante.add(novaCompra);
             }
         }

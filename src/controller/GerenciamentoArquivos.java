@@ -187,7 +187,7 @@ public class GerenciamentoArquivos {
                     String nomeProduto = dados[i];
                     int quantidade = Integer.parseInt(dados[i + 1]);
                     double precoUnitario = Double.parseDouble(dados[i + 2]);
-                    itensComprados.add(new ItemCompra(identificador, nomeProduto, quantidade, precoUnitario));
+                    itensComprados.add(new ItemCompra(quantidade, nomeProduto, precoUnitario, quantidade * precoUnitario));
                 }
 
                 Compra compra = new Compra(identificador, data, docCliente, itensComprados, valorTotal, totalPago);

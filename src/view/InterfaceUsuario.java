@@ -267,7 +267,7 @@ public class InterfaceUsuario {
         String titulo = "Atualizar situação de pagamento";
 
         int identificador = Integer.parseInt(pegarValorDigitado("Digite o identificador da compra", titulo));
-        String valorPagoString = pegarValorDigitado("Digite o valor a pagar", titulo);
+        String valorPagoString = pegarValorDigitado(String.format("Digite o valor a pagar (restante: %.2f)", gCompras.buscarCompraPeloIdentificador(identificador).pegarValorFaltante()), titulo);
 
         if (identificador != 0 && valorPagoString != null) {
             try {

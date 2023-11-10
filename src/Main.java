@@ -50,11 +50,9 @@ public class Main {
                                 menu.cadastrarProduto();
                                 break;
                             case 5:
-                                // TODO 5. Efetuação de uma compra - Milton
                                 menu.efetuarCompra();
                                 break;
                             case 6:
-                                // TODO 6. Atualização da situação de pagamento de uma compra - Milton
                                 menu.atualizarSituacaoPagamento();
                                 break;
                             case 7:
