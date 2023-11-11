@@ -265,23 +265,30 @@ public class InterfaceUsuario {
 
     public void atualizarSituacaoPagamento() {
         String titulo = "Atualizar situação de pagamento";
-
+    
         int identificador = Integer.parseInt(pegarValorDigitado("Digite o identificador da compra", titulo));
-        String valorPagoString = pegarValorDigitado(String.format("Digite o valor a pagar (restante: %.2f)", gCompras.buscarCompraPeloIdentificador(identificador).pegarValorFaltante()), titulo);
-
+        double valorFaltante = gCompras.buscarCompraPeloIdentificador(identificador).pegarValorFaltante();
+        String valorPagoString = pegarValorDigitado(String.format("Digite o valor a pagar (restante: %.2f)", valorFaltante), titulo);
+    
         if (identificador != 0 && valorPagoString != null) {
             try {
                 double valorPago = Double.parseDouble(valorPagoString);
-                boolean atualizacaoSucesso = gCompras.atualizaValorFaltante(identificador, valorPago);
-                if (atualizacaoSucesso) {
-                    mostrarMensagem("Valor pago atualizado com sucesso!", titulo);
+    
+                if (valorPago <= valorFaltante) {
+                    boolean atualizacaoSucesso = gCompras.atualizaValorFaltante(identificador, valorPago);
+                    if (atualizacaoSucesso) {
+                        mostrarMensagem("Valor pago atualizado com sucesso!", titulo);
+                    } else {
+                        mostrarErro("Falha ao atualizar o valor pago. Verifique o identificador e tente novamente.", "Erro");
+                    }
                 } else {
-                    mostrarErro("Falha ao atualizar o valor pago. Verifique o identificador e tente novamente.", "Erro");
+                    mostrarErro("O valor pago não pode ser maior que o valor faltante!", "Erro");
                 }
             } catch (NumberFormatException e) {
                 mostrarErro("Valor pago inválido!", "Erro");
             }
         }
     }
+    
 
 }
