@@ -18,7 +18,8 @@ public class Main {
         gerenciamentoClientes = new GerenciamentoClientes();
         gerenciamentoProdutos = new GerenciamentoProdutos();
         gerenciamentoCompras = new GerenciamentoCompras();
-        gerenciamentoArquivos = new GerenciamentoArquivos(gerenciamentoClientes, gerenciamentoProdutos, gerenciamentoCompras);
+        gerenciamentoArquivos = new GerenciamentoArquivos(gerenciamentoClientes, gerenciamentoProdutos,
+                gerenciamentoCompras);
         gerenciamentoArquivos.lerDados();
         menu = new InterfaceUsuario(gerenciamentoClientes, gerenciamentoCompras, gerenciamentoProdutos);
     }
@@ -26,7 +27,7 @@ public class Main {
     public static void main(String[] args) {
         try {
             new Main().setup();
-            
+
             int opcaoInt = -1;
 
             do {
@@ -56,14 +57,56 @@ public class Main {
                                 menu.atualizarSituacaoPagamento();
                                 break;
                             case 7:
-                                // TODO 7. Relatórios
+                                do {
+                                    opcao = menu.menuRelatorios();
+                                    if (opcao.matches("[a-l]")) {
+                                        switch (opcao) {
+                                            case "a":
+                                                // TODO: relatorio de clientes - Kapo
+                                                break;
+                                            case "b":
+                                                // TODO: Mostrar todos os produtos - Jota
+                                                break;
+                                            case "c":
+                                                // TODO: Buscar produto por nome - Jota
+                                                break;
+                                            case "d":
+                                                // TODO: Mostrar Produtos vencidos - Jota
+                                                break;
+                                            case "e":
+                                                // TODO: Mostrar todas as compras - Milton
+                                                break;
+                                            case "f":
+                                                // TODO: Buscar compra por identificador - Milton
+                                                break;
+                                            case "g":
+                                                // TODO: Mostrar todas as compras não pagas - Milton
+                                                break;
+                                            case "h":
+                                                // TODO: Mostrar as 10 ultimas compras pagas - Milton/Kapo
+                                                break;
+                                            case "i":
+                                                // TODO: Compra mais cara - Kapo
+                                                break;
+                                            case "j":
+                                                // TODO: Compra mais barata - Kapo
+                                                break;
+                                            case "k":
+                                                // TODO: compras feitas em cada mes ultimos 12 meses - Kapo
+                                                break;
+                                            case "l":
+                                                break;
+                                        }
+                                    } else {
+                                        InterfaceUsuario.mostrarErro("Opção inválida!", "Erro");
+                                    }
+                                } while (!opcao.equals("l"));
                                 break;
                             case 8:
                                 gerenciamentoArquivos.salvarDados();
                                 InterfaceUsuario.avisoSaindo();
                                 break;
                         }
-
                     } else {
                         InterfaceUsuario.mostrarErro("Opção inválida!", "Erro");
                     }

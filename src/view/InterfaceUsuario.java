@@ -192,9 +192,11 @@ public class InterfaceUsuario {
                             mostrarMensagem("Produto cadastrado com sucesso!", titulo);
                             break;
                         case 2: // Produto Perecível
-                            String dataValidade = pegarValorDigitado("Digite a data de validade do produto (dd/mm/yyyy):", titulo);
-                           
-                            gProdutos.cadastrarProdutos(gProdutos.criarProdutoPerecivel(nome, preco, descricao, gProdutos.criarLocalDate(dataValidade)));
+                            String dataValidade = pegarValorDigitado(
+                                    "Digite a data de validade do produto (dd/mm/yyyy):", titulo);
+
+                            gProdutos.cadastrarProdutos(gProdutos.criarProdutoPerecivel(nome, preco, descricao,
+                                    gProdutos.criarLocalDate(dataValidade)));
                             mostrarMensagem("Produto perecível cadastrado com sucesso!", titulo);
                             break;
                         default:
@@ -267,7 +269,8 @@ public class InterfaceUsuario {
         String titulo = "Atualizar situação de pagamento";
 
         int identificador = Integer.parseInt(pegarValorDigitado("Digite o identificador da compra", titulo));
-        String valorPagoString = pegarValorDigitado(String.format("Digite o valor a pagar (restante: %.2f)", gCompras.buscarCompraPeloIdentificador(identificador).pegarValorFaltante()), titulo);
+        String valorPagoString = pegarValorDigitado(String.format("Digite o valor a pagar (restante: %.2f)",
+                gCompras.buscarCompraPeloIdentificador(identificador).pegarValorFaltante()), titulo);
 
         if (identificador != 0 && valorPagoString != null) {
             try {
@@ -276,7 +279,8 @@ public class InterfaceUsuario {
                 if (atualizacaoSucesso) {
                     mostrarMensagem("Valor pago atualizado com sucesso!", titulo);
                 } else {
-                    mostrarErro("Falha ao atualizar o valor pago. Verifique o identificador e tente novamente.", "Erro");
+                    mostrarErro("Falha ao atualizar o valor pago. Verifique o identificador e tente novamente.",
+                            "Erro");
                 }
             } catch (NumberFormatException e) {
                 mostrarErro("Valor pago inválido!", "Erro");
@@ -284,4 +288,27 @@ public class InterfaceUsuario {
         }
     }
 
+    public String menuRelatorios() {
+        String menu = "(a) Relação de todos os Clientes que possuem o nome iniciado por uma determinada sequência de caracteres\n" +
+                        "(b) Relação de todos os Produtos\n" +
+                        "(c) Busca de um produto pelo nome\n" +
+                        "(d) Relação de produtos que são perecíveis e que estão com a data de validade vencida\n" +
+                        "(e) Relação de todas as compras\n" +
+                        "(f) Busca de uma compra pelo número\n" +
+                        "(g) Relação de todas as compras que não foram pagas ainda\n" +
+                        "(h) Relação das 10 últimas compras pagas\n" +
+                        "(i) Apresentação das informações da compra mais cara\n" +
+                        "(j) Apresentação das informações da compra mais barata\n" +
+                        "(k) Relação do valor total de compras feitas em cada mês nos últimos 12 meses\n" +
+                        "(l) Voltar\n";
+
+        String valorSelecionado = JOptionPane.showInputDialog(null, menu, "Menu Principal", JOptionPane.PLAIN_MESSAGE);
+
+        if (valorSelecionado == null) {
+            return "l";
+        }
+
+        System.out.println(valorSelecionado);
+        return valorSelecionado;
+    }
 }
