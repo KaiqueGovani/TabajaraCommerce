@@ -1,3 +1,5 @@
+import javax.swing.JOptionPane;
+
 import controller.GerenciamentoArquivos;
 import controller.GerenciamentoClientes;
 import controller.GerenciamentoCompras;
@@ -62,7 +64,6 @@ public class Main {
                                     if (opcao.matches("[a-l]")) {
                                         switch (opcao) {
                                             case "a":
-                                                // TODO: relatorio de clientes por nome - Kapo
                                                 menu.relatorioClientes();
                                                 break;
                                             case "b":
@@ -87,10 +88,10 @@ public class Main {
                                                 // TODO: Mostrar as 10 ultimas compras pagas - Milton/Kapo
                                                 break;
                                             case "i":
-                                                // TODO: Compra mais cara - Kapo
+                                                menu.compraMaisCara();
                                                 break;
                                             case "j":
-                                                // TODO: Compra mais barata - Kapo
+                                                menu.compraMaisBarata();
                                                 break;
                                             case "k":
                                                 // TODO: compras feitas em cada mes ultimos 12 meses - Kapo

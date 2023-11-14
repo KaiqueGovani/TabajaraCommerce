@@ -1,6 +1,8 @@
 package view;
 
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 
 import controller.GerenciamentoClientes;
 import controller.GerenciamentoCompras;
@@ -35,6 +37,19 @@ public class InterfaceUsuario {
 
     public static void mostrarMensagem(String msg, String titulo) {
         JOptionPane.showMessageDialog(null, msg, titulo, JOptionPane.PLAIN_MESSAGE);
+    }
+
+    public static void mostrarMensagemGrande(String mensagem, String titulo) {
+        JTextArea textArea = new JTextArea(16, 50); // Ajuste o número de linhas e colunas conforme necessário.
+        textArea.setText(mensagem); // Seta o texto na JTextArea.
+        textArea.setEditable(false); // Se você quer que o texto seja não-editável.
+        textArea.setWrapStyleWord(true); // Quebra de linha por palavras para não cortar palavras ao meio.
+        textArea.setLineWrap(true); // Ativa a quebra automática de linha.
+
+        JScrollPane scrollPane = new JScrollPane(textArea);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+
+        JOptionPane.showMessageDialog(null, scrollPane, titulo, JOptionPane.INFORMATION_MESSAGE);
     }
 
     public static void avisoSaindo() {
@@ -267,21 +282,23 @@ public class InterfaceUsuario {
 
     public void atualizarSituacaoPagamento() {
         String titulo = "Atualizar situação de pagamento";
-    
+
         int identificador = Integer.parseInt(pegarValorDigitado("Digite o identificador da compra", titulo));
         double valorFaltante = gCompras.buscarCompraPeloIdentificador(identificador).pegarValorFaltante();
-        String valorPagoString = pegarValorDigitado(String.format("Digite o valor a pagar (restante: %.2f)", valorFaltante), titulo);
-    
+        String valorPagoString = pegarValorDigitado(
+                String.format("Digite o valor a pagar (restante: %.2f)", valorFaltante), titulo);
+
         if (identificador != 0 && valorPagoString != null) {
             try {
                 double valorPago = Double.parseDouble(valorPagoString);
-    
+
                 if (valorPago <= valorFaltante) {
                     boolean atualizacaoSucesso = gCompras.atualizaValorFaltante(identificador, valorPago);
                     if (atualizacaoSucesso) {
                         mostrarMensagem("Valor pago atualizado com sucesso!", titulo);
                     } else {
-                        mostrarErro("Falha ao atualizar o valor pago. Verifique o identificador e tente novamente.", "Erro");
+                        mostrarErro("Falha ao atualizar o valor pago. Verifique o identificador e tente novamente.",
+                                "Erro");
                     }
                 } else {
                     mostrarErro("O valor pago não pode ser maior que o valor faltante!", "Erro");
@@ -291,20 +308,21 @@ public class InterfaceUsuario {
             }
         }
     }
-    
+
     public String menuRelatorios() {
-        String menu = "(a) Relação de todos os Clientes que possuem o nome iniciado por uma determinada sequência de caracteres\n" +
-                        "(b) Relação de todos os Produtos\n" +
-                        "(c) Busca de um produto pelo nome\n" +
-                        "(d) Relação de produtos que são perecíveis e que estão com a data de validade vencida\n" +
-                        "(e) Relação de todas as compras\n" +
-                        "(f) Busca de uma compra pelo número\n" +
-                        "(g) Relação de todas as compras que não foram pagas ainda\n" +
-                        "(h) Relação das 10 últimas compras pagas\n" +
-                        "(i) Apresentação das informações da compra mais cara\n" +
-                        "(j) Apresentação das informações da compra mais barata\n" +
-                        "(k) Relação do valor total de compras feitas em cada mês nos últimos 12 meses\n" +
-                        "(l) Voltar\n";
+        String menu = "(a) Relação de todos os Clientes que possuem o nome iniciado por uma determinada sequência de caracteres\n"
+                +
+                "(b) Relação de todos os Produtos\n" +
+                "(c) Busca de um produto pelo nome\n" +
+                "(d) Relação de produtos que são perecíveis e que estão com a data de validade vencida\n" +
+                "(e) Relação de todas as compras\n" +
+                "(f) Busca de uma compra pelo número\n" +
+                "(g) Relação de todas as compras que não foram pagas ainda\n" +
+                "(h) Relação das 10 últimas compras pagas\n" +
+                "(i) Apresentação das informações da compra mais cara\n" +
+                "(j) Apresentação das informações da compra mais barata\n" +
+                "(k) Relação do valor total de compras feitas em cada mês nos últimos 12 meses\n" +
+                "(l) Voltar\n";
 
         String valorSelecionado = JOptionPane.showInputDialog(null, menu, "Menu Principal", JOptionPane.PLAIN_MESSAGE);
 
@@ -324,7 +342,29 @@ public class InterfaceUsuario {
             mostrarErro("Nenhum cliente encontrado!", "Erro");
         } else {
             System.out.println(lista);
-            mostrarMensagem(lista, "Clientes por nome: " + nome);
+            mostrarMensagemGrande(lista, "Clientes por nome: " + nome);
+        }
+    }
+
+    public void compraMaisCara() {
+        try {
+            String titulo = "Compra mais cara";
+            String compra = gCompras.buscarCompraMaisCara().paraStringFormatado();
+            System.out.println(compra);
+            mostrarMensagemGrande(compra, titulo);
+        } catch (Exception e) {
+            mostrarErro("Nenhuma compra encontrada!", "Erro");
+        }
+    }
+
+    public void compraMaisBarata() {
+        try {
+            String titulo = "Compra mais barata";
+            String compra = gCompras.buscarCompraMaisBarata().paraStringFormatado();
+            System.out.println(compra);
+            mostrarMensagemGrande(compra, titulo);
+        } catch (Exception e) {
+            mostrarErro("Nenhuma compra encontrada!", "Erro");
         }
     }
 }

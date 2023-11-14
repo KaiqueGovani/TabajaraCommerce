@@ -6,9 +6,12 @@ import java.util.List;
 
 import model.Compra;
 import model.ItemCompra;
+import model.PessoaFisica;
 
 /**
  * GerenciamentoCompras
+ * 
+ * Classe responsável por gerenciar as compras
  */
 public class GerenciamentoCompras {
     private List<Compra> listCompras;
@@ -40,6 +43,11 @@ public class GerenciamentoCompras {
         }
     }
 
+    /**
+     * Cria uma compra existente
+     * 
+     * @param compra
+     */
     public void criarCompraExistente(Compra compra) {
         try {
             listCompras.add(compra);
@@ -49,6 +57,12 @@ public class GerenciamentoCompras {
         }
     }
 
+    /**
+     * Adiciona um item na lista de compras
+     * 
+     * @param itensComprados
+     * @param itemCompra
+     */
     public void adicionarItemCompra(List<ItemCompra> itensComprados, ItemCompra itemCompra) {
         try {
             itensComprados.add(itemCompra);
@@ -58,6 +72,12 @@ public class GerenciamentoCompras {
         }
     }
 
+    /**
+     * Adiciona um item na lista de compras por identificador
+     * 
+     * @param identificador
+     * @param itemCompra
+     */
     public void adicionarItemCompraPorIdentificador(int identificador, ItemCompra itemCompra) {
         Compra compra = buscarCompraPeloIdentificador(identificador);
         if (compra != null) {
@@ -68,10 +88,24 @@ public class GerenciamentoCompras {
         }
     }
 
+    /**
+     * Cria um item de compra
+     * 
+     * @param quantidade
+     * @param nomeProduto
+     * @param precoUnitario
+     * @param valorTotal
+     * @return o item de compra criado
+     */
     public ItemCompra criarItemCompra(int quantidade, String nomeProduto, double precoUnitario, double valorTotal) {
         return new ItemCompra(quantidade, nomeProduto, precoUnitario, valorTotal);
     }
 
+    /**
+     * Lista todas as compras
+     * 
+     * @return lista de compras
+     */
     public List<Compra> listarCompras() {
         return new ArrayList<>(this.listCompras); // Retorna uma lista de compras
     }
@@ -121,5 +155,25 @@ public class GerenciamentoCompras {
             System.out.println("Compra não encontrada");
             throw new RuntimeException("Compra não encontrada");
         }
+    }
+
+    public Compra buscarCompraMaisCara() {
+        Compra compraMaisCara = null;
+        for (Compra compra : listCompras) {
+            if (compraMaisCara == null || compraMaisCara.pegarValorTotal() < compra.pegarValorTotal()) {
+                compraMaisCara = compra;
+            }
+        }
+        return compraMaisCara;
+    }
+
+    public Compra buscarCompraMaisBarata() {
+        Compra compraMaisBarata = null;
+        for (Compra compra : listCompras) {
+            if (compraMaisBarata == null || compraMaisBarata.pegarValorTotal() > compra.pegarValorTotal()) {
+                compraMaisBarata = compra;
+            }
+        }
+        return compraMaisBarata;
     }
 }
