@@ -315,4 +315,16 @@ public class InterfaceUsuario {
         System.out.println(valorSelecionado);
         return valorSelecionado;
     }
+
+    public void relatorioClientes() {
+        String nome = pegarValorDigitado("Digite o nome do cliente:", "Relatório de Clientes");
+        System.out.println(nome);
+        String lista = gClientes.ListaClientesParaString(gClientes.listarClientesPorNome(nome));
+        if (lista.equals("")) {
+            mostrarErro("Nenhum cliente encontrado!", "Erro");
+        } else {
+            System.out.println(lista);
+            mostrarMensagem(lista, "Clientes por nome: " + nome);
+        }
+    }
 }

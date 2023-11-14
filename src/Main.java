@@ -62,7 +62,8 @@ public class Main {
                                     if (opcao.matches("[a-l]")) {
                                         switch (opcao) {
                                             case "a":
-                                                // TODO: relatorio de clientes - Kapo
+                                                // TODO: relatorio de clientes por nome - Kapo
+                                                menu.relatorioClientes();
                                                 break;
                                             case "b":
                                                 // TODO: Mostrar todos os produtos - Jota

@@ -47,7 +47,8 @@ public class GerenciamentoClientes {
         return new PessoaFisica(nome, LocalDate.now(), cpf, qtdMaxParcelas, endereco);
     }
 
-    public PessoaJuridica criarPessoaJuridica(String nome, Endereco endereco, String cnpj, String razaoSocial, int prazoPagamento) {
+    public PessoaJuridica criarPessoaJuridica(String nome, Endereco endereco, String cnpj, String razaoSocial,
+            int prazoPagamento) {
         return new PessoaJuridica(nome, LocalDate.now(), cnpj, razaoSocial, prazoPagamento, endereco);
     }
 
@@ -80,9 +81,8 @@ public class GerenciamentoClientes {
     public List<Cliente> listarClientesPorNome(String nome) {
         List<Cliente> clientesPorNome = new ArrayList<>();
         for (Cliente cliente : clientes) {
-            if (cliente.pegarNome()
-                    .toLowerCase(null)
-                    .startsWith(nome.toLowerCase(null))) {
+            if (cliente.pegarNome().toLowerCase()
+                    .startsWith(nome.toLowerCase())) {
                 clientesPorNome.add(cliente);
             }
         }
@@ -122,4 +122,11 @@ public class GerenciamentoClientes {
         return false;
     }
 
+    public String ListaClientesParaString(List<Cliente> listaClientes) {
+        String lista = "";
+        for (Cliente cliente : listaClientes) {
+            lista += cliente.paraStringFormatado() + "\n\n";
+        }
+        return lista;
+    }
 }
