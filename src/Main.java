@@ -71,7 +71,7 @@ public class Main {
                                                 menu.relatorioProdutosPorNome();
                                                 break;
                                             case "d":
-                                                // TODO: Mostrar Produtos vencidos - Jota
+                                                menu.relatorioProdutosVencidos();
                                                 break;
                                             case "e":
                                                 // TODO: Mostrar todas as compras - Milton
