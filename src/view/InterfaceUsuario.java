@@ -287,7 +287,7 @@ public class InterfaceUsuario {
         }
     }
 
-    public void atualizarSituacaoPagamento() {
+    public void atualizarSituacaoPagamento() { /*Verificar questão da vírgula*/
         try {
 
             String titulo = "Atualizar situação de pagamento";
@@ -378,14 +378,58 @@ public class InterfaceUsuario {
         }
     }
 
-public void relatorioProdutosVencidos() {
-    String titulo = "Relação de Produtos Vencidos";
-    String lista = gProdutos.listaProdutosVencidosParaString(gProdutos.listarProdutosVencidos());
+    public void relatorioProdutosVencidos() {
+        String titulo = "Relação de Produtos Vencidos";
+        String lista = gProdutos.listaProdutosVencidosParaString(gProdutos.listarProdutosVencidos());
 
-    if (lista.equals("")) {
-        mostrarErro("Nenhum produto vencido encontrado!", "Erro");
+        if (lista.equals("")) {
+            mostrarErro("Nenhum produto vencido encontrado!", "Erro");
+            } else {
+            mostrarMensagemGrande(lista, titulo);
+            }
+    }
+
+    public void relatorioCompras() {
+        String titulo = "Relação de todas as compras";
+        String lista = gCompras.listaComprasParaString(gCompras.listarCompras());
+        if (lista.equals("")) {
+            mostrarErro("Nenhuma compra encontrada!", "Erro");
         } else {
-        mostrarMensagemGrande(lista, titulo);
+            mostrarMensagemGrande(lista, titulo);
+        }
+    }
+
+    public void relatorioCompraPeloIdentificador() {
+        String titulo = "Busca de uma compra pro número";
+        int identificador = Integer.parseInt(pegarValorDigitado("Digite o identificador da compra", titulo));
+        System.out.println(identificador);
+        String listaCompras = gCompras.listaComprasParaString(gCompras.listarComprasPorIdentificador(identificador));
+        if (listaCompras.equals("")) {
+            mostrarErro("Nenhuma compra encontrada!", "Erro");
+        } else {
+            mostrarMensagemGrande(listaCompras, "Compra pelo identificador: " + identificador);
+        }
+    }
+
+    public void relatorioComprasNaoPagas() {
+        String titulo = "Relação de todas as compras que não foram pagas ainda";
+        String listaNaoPaga = gCompras.listaComprasParaString(gCompras.listarComprasNaoPagas());
+        System.out.println(listaNaoPaga);
+        if (listaNaoPaga.equals("")) {
+            mostrarErro("Nenhuma compra encontrada!", "Erro");
+        } else {
+            mostrarMensagemGrande(listaNaoPaga, titulo);
+        }
+    }
+
+    public void relatorioDezUltimasPagas() {
+        String titulo = "Relação das 10 últimas compras pagas";
+        String listaPaga = gCompras.listaComprasParaString(gCompras.listarComprasUltimasPagas());
+        System.out.println(listaPaga);
+        if (listaPaga.equals("")) {
+            mostrarErro("Nenhuma compra encontrada!", "Erro");
+        } else {
+            mostrarMensagemGrande(listaPaga, titulo);
         }
     }
 
