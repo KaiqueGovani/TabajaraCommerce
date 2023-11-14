@@ -378,6 +378,17 @@ public class InterfaceUsuario {
         }
     }
 
+public void relatorioProdutosVencidos() {
+    String titulo = "Relação de Produtos Vencidos";
+    String lista = gProdutos.listaProdutosVencidosParaString(gProdutos.listarProdutosVencidos());
+
+    if (lista.equals("")) {
+        mostrarErro("Nenhum produto vencido encontrado!", "Erro");
+        } else {
+        mostrarMensagemGrande(lista, titulo);
+        }
+    }
+
     public void compraMaisCara() {
         try {
             String titulo = "Compra mais cara";
