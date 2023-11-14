@@ -29,9 +29,9 @@ O sistema é construído com base em programação orientada a objetos em Java, 
 
 ### Desenvolvimento e Colaboração
 Este projeto é parte de uma avaliação acadêmica e foi desenvolvido em colaboração por:
-Kaique Medeiros Govani
-Milton Rogerio Dotto Penha Junior
-Joao Rafael Jordao Pereira
+- Kaique Medeiros Govani
+- Milton Rogerio Dotto Penha Junior
+- Joao Rafael Jordao Pereira
 
 ---
 
