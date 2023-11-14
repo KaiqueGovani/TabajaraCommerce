@@ -63,7 +63,7 @@ public class GerenciamentoArquivos {
     }
 
     public void salvarClientes(List<Cliente> clientes) {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(fclientes))) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(fclientes, StandardCharsets.UTF_8))) {
             for (Cliente cliente : clientes) {
                 bw.write(cliente.paraString()); // escreve o cliente no arquivo
                 bw.newLine(); // adiciona um \n no final
@@ -111,7 +111,7 @@ public class GerenciamentoArquivos {
     }
 
     public void salvarProdutos(List<Produto> produtos) {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(fprodutos))) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(fprodutos, StandardCharsets.UTF_8))) {
             for (Produto produto : produtos) {
                 bw.write(produto.paraString()); // escreve o produto no arquivo
                 bw.newLine(); // adiciona um \n no final
@@ -161,7 +161,7 @@ public class GerenciamentoArquivos {
     }
 
     public void salvarCompras(List<Compra> compras) {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(fcompras))) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(fcompras, StandardCharsets.UTF_8))) {
             for (Compra compra : compras) {
                 bw.write(compra.paraString()); // escreve a compra no arquivo
                 bw.newLine(); // adiciona um \n no final
