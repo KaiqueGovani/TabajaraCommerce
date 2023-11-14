@@ -24,7 +24,7 @@ public class Produto {
                 "\nCodigo: " + codigo +
                 "\nNome: " + nome +
                 "\nDescricao: " + descricao +
-                "\nPreco: " + preco;
+                "\nPreco: R$ " + String.format("%.2f", preco);
     }
 
     public String paraString() {

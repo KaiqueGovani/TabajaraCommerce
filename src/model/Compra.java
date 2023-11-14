@@ -45,8 +45,8 @@ public class Compra {
         return "Identificador: " + identificador + "\n" +
                 "Data do Pedido: " + dataPedido + "\n" +
                 "Documento do Cliente: " + docCliente + "\n" +
-                "Valor Total: " + pegarValorTotal() + "\n" +
-                "Total Pago: " + totalPago + "\n\n" +
+                "Valor Total: R$ " + pegarValorTotal() + "\n" +
+                "Total Pago: R$ " + totalPago + "\n\n" +
                 "Itens Comprados: \n" + pegarItensCompradosFormatado(); 
     }
 

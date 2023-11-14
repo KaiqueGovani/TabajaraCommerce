@@ -293,7 +293,7 @@ public class GerenciamentoCompras {
                     + compra.pegarDataPedido().getYear();
             if (valorTotalPorMesAno.containsKey(mesAno)) {
                 double totalMes = valorTotalPorMesAno.remove(mesAno);
-                lista += mesAno + " - " + String.format("%.2f", totalMes) + " R$\n";
+                lista += mesAno + " - R$ " + String.format("%.2f", totalMes) + "\n";
             }
         }
 
