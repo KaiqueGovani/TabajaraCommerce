@@ -6,7 +6,6 @@ import java.util.List;
 
 import model.Compra;
 import model.ItemCompra;
-import model.PessoaFisica;
 
 /**
  * GerenciamentoCompras

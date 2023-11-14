@@ -1,5 +1,3 @@
-import javax.swing.JOptionPane;
-
 import controller.GerenciamentoArquivos;
 import controller.GerenciamentoClientes;
 import controller.GerenciamentoCompras;
