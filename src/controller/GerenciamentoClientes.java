@@ -125,7 +125,7 @@ public class GerenciamentoClientes {
     public String ListaClientesParaString(List<Cliente> listaClientes) {
         String lista = "";
         for (Cliente cliente : listaClientes) {
-            lista += cliente.paraStringFormatado() + "\n\n";
+            lista += cliente.paraStringFormatado() + "\n\n==============================================================================\n\n";
         }
         return lista;
     }
