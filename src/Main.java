@@ -71,19 +71,20 @@ public class Main {
                                                 menu.relatorioProdutosPorNome();
                                                 break;
                                             case "d":
-                                                menu.relatorioProdutosVencidos();
+                                                // TODO: Mostrar Produtos vencidos - Jota
                                                 break;
                                             case "e":
-                                                // TODO: Mostrar todas as compras - Milton
+                                                menu.relatorioCompras();
                                                 break;
                                             case "f":
-                                                // TODO: Buscar compra por identificador - Milton
+                                                menu.relatorioCompraPeloIdentificador();
                                                 break;
                                             case "g":
-                                                // TODO: Mostrar todas as compras não pagas - Milton
+                                                menu.relatorioComprasNaoPagas();
                                                 break;
                                             case "h":
                                                 // TODO: Mostrar as 10 ultimas compras pagas - Milton/Kapo
+                                                menu.relatorioDezUltimasPagas();
                                                 break;
                                             case "i":
                                                 menu.compraMaisCara();
