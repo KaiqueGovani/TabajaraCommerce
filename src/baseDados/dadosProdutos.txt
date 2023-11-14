@@ -1,5 +1,0 @@
-1,pincel1,pincelada dura,4.0
-2,pincel2,pincelada boa,5.0
-3,Amigo,Estou aqui!,1000.0
-4,Micheal,Jackson,9.0,2003-03-24
-5,Garry,Kasparov,70.0,3024-12-09

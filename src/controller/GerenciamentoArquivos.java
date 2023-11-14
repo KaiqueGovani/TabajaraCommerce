@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,9 +25,9 @@ public class GerenciamentoArquivos {
     GerenciamentoProdutos gerenciamentoProdutos;
     GerenciamentoCompras gerenciamentoCompras;
 
-    File fclientes = new File("src/baseDados/dadosClientes.txt");
-    File fcompras = new File("src/baseDados/dadosCompras.txt");
-    File fprodutos = new File("src/baseDados/dadosProdutos.txt");
+    File fclientes = new File("src/baseDados/dadosClientes.csv");
+    File fcompras = new File("src/baseDados/dadosCompras.csv");
+    File fprodutos = new File("src/baseDados/dadosProdutos.csv");
 
     public GerenciamentoArquivos(GerenciamentoClientes gerenciamentoClientes,
             GerenciamentoProdutos gerenciamentoProdutos,
@@ -73,7 +74,7 @@ public class GerenciamentoArquivos {
     }
 
     public void lerClientes() {
-        try (BufferedReader br = new BufferedReader(new FileReader(fclientes))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(fclientes, StandardCharsets.UTF_8))) {
             while (br.ready()) {
                 String linha = br.readLine();
                 String[] dados = linha.split(",");
@@ -121,7 +122,7 @@ public class GerenciamentoArquivos {
     }
 
     public void lerProdutos() {
-        try (BufferedReader br = new BufferedReader(new FileReader(fprodutos))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(fprodutos, StandardCharsets.UTF_8))) {
             while (br.ready()) {
                 String linha = br.readLine();
                 String[] dados = linha.split(",");
@@ -171,7 +172,7 @@ public class GerenciamentoArquivos {
     }
 
     public void lerCompras() {
-        try (BufferedReader br = new BufferedReader(new FileReader(fcompras))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(fcompras, StandardCharsets.UTF_8))) {
             while (br.ready()) {
                 String linha = br.readLine();
                 String[] dados = linha.split(",");
