@@ -371,7 +371,7 @@ public class InterfaceUsuario {
                 "(k) Relação do valor total de compras feitas em cada mês nos últimos 12 meses\n" +
                 "(l) Voltar\n";
 
-        String valorSelecionado = JOptionPane.showInputDialog(null, menu, "Menu Principal", JOptionPane.PLAIN_MESSAGE);
+        String valorSelecionado = JOptionPane.showInputDialog(null, menu, "Menu De Relatórios", JOptionPane.PLAIN_MESSAGE);
 
         if (valorSelecionado == null) {
             return "l";
