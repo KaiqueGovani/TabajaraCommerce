@@ -65,10 +65,10 @@ public class Main {
                                                 menu.relatorioClientes();
                                                 break;
                                             case "b":
-                                                // TODO: Mostrar todos os produtos - Jota
+                                                 menu.relatorioProdutos();
                                                 break;
                                             case "c":
-                                                // TODO: Buscar produto por nome - Jota
+                                                menu.relatorioProdutosPorNome();
                                                 break;
                                             case "d":
                                                 // TODO: Mostrar Produtos vencidos - Jota
