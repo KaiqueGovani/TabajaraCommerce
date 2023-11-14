@@ -45,8 +45,8 @@ public class Compra {
         return "Identificador: " + identificador + "\n" +
                 "Data do Pedido: " + dataPedido + "\n" +
                 "Documento do Cliente: " + docCliente + "\n" +
-                "Valor Total: R$ " + pegarValorTotal() + "\n" +
-                "Total Pago: R$ " + totalPago + "\n\n" +
+                String.format("Valor Total: R$ %.2f", pegarValorTotal()) + "\n" +
+                String.format("Total Pago: R$ %.2f", totalPago) + "\n\n" +
                 "Itens Comprados: \n" + pegarItensCompradosFormatado(); 
     }
 

@@ -432,7 +432,7 @@ public class InterfaceUsuario {
 
     public void relatorioCompras() {
         String titulo = "Relação de todas as compras";
-        String lista = gCompras.listaComprasParaString(gCompras.listarCompras());
+        String lista = gCompras.listaComprasParaString(gCompras.listarComprasOrdenado());
         if (lista.equals("")) {
             mostrarErro("Nenhuma compra encontrada!", "Erro");
         } else {

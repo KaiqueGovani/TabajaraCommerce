@@ -22,8 +22,8 @@ public class ItemCompra {
     public String paraStringFormatado() {
         return "Nome do Produto: " + nomeProduto + "\n" +
                 "Quantidade: " + quantidade + "\n" +
-                "Preço Unitário: R$ " + precoUnitario + "\n" +
-                "Valor Total: R$ " + pegarValorTotal() + "\n";
+                String.format("Preço Unitário: R$ %.2f", precoUnitario) + "\n" +
+                String.format("Valor Total: R$ %.2f", pegarValorTotal()) + "\n";
     }
 
     public double pegarValorTotal() {

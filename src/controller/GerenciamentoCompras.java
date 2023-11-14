@@ -102,12 +102,17 @@ public class GerenciamentoCompras {
         return new ItemCompra(quantidade, nomeProduto, precoUnitario, valorTotal);
     }
 
+    public List<Compra> listarCompras() {
+        // Retorna uma lista de compras
+        return new ArrayList<>(listCompras);
+    }
+
     /**
      * Lista todas as compras em ordem de identificador
      * 
      * @return lista de compras
      */
-    public List<Compra> listarCompras() {
+    public List<Compra> listarComprasOrdenado() {
         // Retorna uma lista de compras ordenada por identificador
         List<Compra> listaOrdenada = new ArrayList<>(listCompras);
         listaOrdenada.sort((compra1, compra2) -> compra1.pegarIdentificador() - compra2.pegarIdentificador());
