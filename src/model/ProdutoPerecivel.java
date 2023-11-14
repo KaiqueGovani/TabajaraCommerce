@@ -33,7 +33,7 @@ public class ProdutoPerecivel extends Produto {
     @Override
     public String paraStringFormatado() {
         return super.paraString() +
-                ", Data De Validade: " + dataDeValidade;
+                "\nData De Validade: " + dataDeValidade;
     }
 
     @Override
