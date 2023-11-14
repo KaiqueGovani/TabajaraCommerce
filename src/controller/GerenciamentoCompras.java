@@ -148,8 +148,7 @@ public class GerenciamentoCompras {
     public boolean atualizaValorFaltante(int identificador, double totalPago) {
         Compra compra = buscarCompraPeloIdentificador(identificador);
         if (compra != null) {
-            compra.atualizarTotalPago(totalPago);
-            return true;
+            return compra.atualizarTotalPago(totalPago);
         } else {
             System.out.println("Compra não encontrada");
             throw new RuntimeException("Compra não encontrada");
@@ -174,5 +173,15 @@ public class GerenciamentoCompras {
             }
         }
         return compraMaisBarata;
+    }
+
+    public double pegarValorFaltantePorIdentificador(int identificador) {
+        Compra compra = buscarCompraPeloIdentificador(identificador);
+        if (compra != null) {
+            return compra.pegarValorFaltante();
+        } else {
+            System.out.println("Compra não encontrada");
+            throw new RuntimeException("Compra não encontrada");
+        }
     }
 }

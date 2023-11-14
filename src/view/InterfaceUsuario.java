@@ -235,7 +235,7 @@ public class InterfaceUsuario {
             }
 
             int id = gCompras.cadastrarCompra(docCliente);
-            if (id > 0) {
+            if (id > 0) { // Se a compra foi cadastrada com sucesso
                 int valorSelecionado;
                 do {
                     String menu = "1. Adicionar item\n" +
@@ -249,8 +249,15 @@ public class InterfaceUsuario {
                             cadastrarItemCompra(id);
                             break;
                         case 2: // Finalizar compra
-                            int pago = Integer.parseInt(pegarValorDigitado("Digite o valor pago:", titulo));
-                            gCompras.atualizaValorFaltante(id, pago);
+                            boolean resultado;
+                            do { // Pede o valor pago que deve ser menor ou igual ao valor faltante
+                                int pago = Integer.parseInt(pegarValorDigitado("Digite o valor pago:", titulo));
+                                resultado = gCompras.atualizaValorFaltante(id, pago);
+                                if (!resultado) {
+                                    mostrarErro("Valor pago maior que o valor faltante!", titulo);
+                                }
+                            } while (!resultado);
+
                             mostrarMensagem("Compra finalizada com sucesso!", titulo);
                             mostrarMensagem(gCompras.buscarCompraPeloIdentificador(id).paraStringFormatado(), titulo);
                             break;
@@ -281,31 +288,30 @@ public class InterfaceUsuario {
     }
 
     public void atualizarSituacaoPagamento() {
-        String titulo = "Atualizar situação de pagamento";
+        try {
 
-        int identificador = Integer.parseInt(pegarValorDigitado("Digite o identificador da compra", titulo));
-        double valorFaltante = gCompras.buscarCompraPeloIdentificador(identificador).pegarValorFaltante();
-        String valorPagoString = pegarValorDigitado(
-                String.format("Digite o valor a pagar (restante: %.2f)", valorFaltante), titulo);
+            String titulo = "Atualizar situação de pagamento";
 
-        if (identificador != 0 && valorPagoString != null) {
-            try {
-                double valorPago = Double.parseDouble(valorPagoString);
+            int identificador = Integer.parseInt(pegarValorDigitado("Digite o identificador da compra", titulo));
+            double valorFaltante = gCompras.pegarValorFaltantePorIdentificador(identificador);
+            String valorPagoString = pegarValorDigitado(
+                    String.format("Digite o valor a pagar (restante: %.2f)", valorFaltante), titulo);
 
-                if (valorPago <= valorFaltante) {
+            if (identificador != 0 && valorPagoString != null) {
+                try {
+                    double valorPago = Double.parseDouble(valorPagoString);
                     boolean atualizacaoSucesso = gCompras.atualizaValorFaltante(identificador, valorPago);
                     if (atualizacaoSucesso) {
                         mostrarMensagem("Valor pago atualizado com sucesso!", titulo);
                     } else {
-                        mostrarErro("Falha ao atualizar o valor pago. Verifique o identificador e tente novamente.",
-                                "Erro");
+                        throw new Exception("Valor pago maior que o valor faltante!");
                     }
-                } else {
-                    mostrarErro("O valor pago não pode ser maior que o valor faltante!", "Erro");
+                } catch (NumberFormatException e) {
+                    mostrarErro("Valor pago inválido: \n", "Erro");
                 }
-            } catch (NumberFormatException e) {
-                mostrarErro("Valor pago inválido!", "Erro");
             }
+        } catch (Exception e) {
+            mostrarErro("Erro ao atualizar situação de pagamento: \n" + e.getMessage(), "Erro");
         }
     }
 
