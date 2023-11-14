@@ -152,6 +152,10 @@ public class GerenciamentoCompras {
     public boolean atualizaValorFaltante(int identificador, double totalPago) {
         Compra compra = buscarCompraPeloIdentificador(identificador);
         if (compra != null) {
+            if (compra.pegarValorFaltante() == 0) {
+                System.out.println("Compra já paga");
+                throw new RuntimeException("Compra já paga");
+            }
             return compra.atualizarTotalPago(totalPago);
         } else {
             System.out.println("Compra não encontrada");
@@ -192,7 +196,8 @@ public class GerenciamentoCompras {
     public String listaComprasParaString(List<Compra> listaCompras) {
         String lista = "";
         for (Compra compra : listaCompras) {
-            lista += compra.paraStringFormatado() + "\n\n==============================================================================\n\n";
+            lista += compra.paraStringFormatado()
+                    + "\n\n=====================================================================\n\n";
         }
         return lista;
     }
@@ -226,28 +231,29 @@ public class GerenciamentoCompras {
         // Pegar as últimas dez compras (ou menos se houver menos de dez)
         int limite = Math.min(comprasPagas.size(), 10);
         return comprasPagas.subList(0, limite);
-    }    
+    }
 
     public List<Compra> buscarComprasUltimos12Meses() {
         List<Compra> comprasUltimos12Meses = new ArrayList<>();
         LocalDate dataAtual = LocalDate.now();
-        LocalDate dataLimite = dataAtual.minusMonths(11).withDayOfMonth(1); // Começa do primeiro dia do mês, 12 meses atrás
+        LocalDate dataLimite = dataAtual.minusMonths(11).withDayOfMonth(1); // Começa do primeiro dia do mês, 12 meses
+                                                                            // atrás
 
         for (Compra compra : listCompras) {
             LocalDate dataCompra = compra.pegarDataPedido();
             // Checa se a compra está dentro do intervalo do mês atual até 12 meses atrás
-            if ((dataCompra.isAfter(dataLimite) || dataCompra.isEqual(dataLimite)) && 
-                (dataCompra.isBefore(dataAtual.withDayOfMonth(1)) || dataCompra.getYear() == dataAtual.getYear())) {
+            if ((dataCompra.isAfter(dataLimite) || dataCompra.isEqual(dataLimite)) &&
+                    (dataCompra.isBefore(dataAtual) || dataCompra.getYear() == dataAtual.getYear())) {
                 comprasUltimos12Meses.add(compra);
             }
         }
         // Ordena a lista por data
-        comprasUltimos12Meses.sort((compra1, compra2) -> compra1.pegarDataPedido().compareTo(compra2.pegarDataPedido()));
+        comprasUltimos12Meses
+                .sort((compra1, compra2) -> compra1.pegarDataPedido().compareTo(compra2.pegarDataPedido()));
 
         System.out.println(listaComprasParaString(comprasUltimos12Meses));
         return comprasUltimos12Meses;
     }
-
 
     public String valorTotalUltimos12MesesParaString(List<Compra> listaCompras) {
         HashMap<Integer, String> meses = new HashMap<>();
@@ -268,12 +274,14 @@ public class GerenciamentoCompras {
         HashMap<String, Double> valorTotalPorMesAno = new HashMap<>();
 
         for (Compra compra : listaCompras) {
-            String mesAno = meses.get(compra.pegarDataPedido().getMonthValue()) + "/" + compra.pegarDataPedido().getYear();
+            String mesAno = meses.get(compra.pegarDataPedido().getMonthValue()) + "/"
+                    + compra.pegarDataPedido().getYear();
             valorTotalPorMesAno.merge(mesAno, compra.pegarValorTotal(), Double::sum);
         }
 
         for (Compra compra : listaCompras) {
-            String mesAno = meses.get(compra.pegarDataPedido().getMonthValue()) + "/" + compra.pegarDataPedido().getYear();
+            String mesAno = meses.get(compra.pegarDataPedido().getMonthValue()) + "/"
+                    + compra.pegarDataPedido().getYear();
             if (valorTotalPorMesAno.containsKey(mesAno)) {
                 double totalMes = valorTotalPorMesAno.remove(mesAno);
                 lista += mesAno + " - " + String.format("%.2f", totalMes) + " R$\n";
@@ -286,4 +294,4 @@ public class GerenciamentoCompras {
 
         return lista;
     }
-}   
+}

@@ -198,7 +198,7 @@ public class InterfaceUsuario {
                 int opcaoInt = Integer.parseInt(valorSelecionado);
                 if (opcaoInt >= 1 && opcaoInt <= 2) {
                     String nome = pegarValorDigitado("Digite o nome do produto:", titulo);
-                    double preco = Double.parseDouble(pegarValorDigitado("Digite o preço do produto:", titulo));
+                    double preco = Double.parseDouble(pegarValorDigitado("Digite o preço do produto:", titulo).replace(',', '.'));
                     String descricao = pegarValorDigitado("Digite a descrição do produto:", titulo);
 
                     switch (opcaoInt) {
@@ -278,7 +278,7 @@ public class InterfaceUsuario {
             String titulo = "Cadastrar um produto";
             String nomeProduto = pegarValorDigitado("Digite o nome do produto:", titulo);
             int quantidade = Integer.parseInt(pegarValorDigitado("Digite a quantidade do produto:", titulo));
-            double precoUnitario = Double.parseDouble(pegarValorDigitado("Digite o preço unitario:", titulo));
+            double precoUnitario = Double.parseDouble(pegarValorDigitado("Digite o preço unitario:", titulo).replace(',', '.'));
             gCompras.adicionarItemCompraPorIdentificador(identificador,
                     gCompras.criarItemCompra(quantidade, nomeProduto, precoUnitario, quantidade * precoUnitario));
             mostrarMensagem("Item de compra criado e adicionado com sucesso!", titulo);
@@ -287,19 +287,24 @@ public class InterfaceUsuario {
         }
     }
 
-    public void atualizarSituacaoPagamento() { /*Verificar questão da vírgula*/
+    public void atualizarSituacaoPagamento() { /* Verificar questão da vírgula */
         try {
 
             String titulo = "Atualizar situação de pagamento";
 
             int identificador = Integer.parseInt(pegarValorDigitado("Digite o identificador da compra", titulo));
             double valorFaltante = gCompras.pegarValorFaltantePorIdentificador(identificador);
+            if (valorFaltante == 0) {
+                mostrarMensagem("Essa compra já foi paga!", titulo);
+                return;
+            }
+
             String valorPagoString = pegarValorDigitado(
                     String.format("Digite o valor a pagar (restante: %.2f)", valorFaltante), titulo);
 
             if (identificador != 0 && valorPagoString != null) {
                 try {
-                    double valorPago = Double.parseDouble(valorPagoString);
+                    double valorPago = Double.parseDouble(valorPagoString.replace(',', '.'));
                     boolean atualizacaoSucesso = gCompras.atualizaValorFaltante(identificador, valorPago);
                     if (atualizacaoSucesso) {
                         mostrarMensagem("Valor pago atualizado com sucesso!", titulo);
@@ -354,39 +359,39 @@ public class InterfaceUsuario {
 
     public void relatorioProdutos() {
         String titulo = "Relação de todos os Produtos";
-        String lista = gProdutos.ListaProdutosParaString(gProdutos.listarProdutos());
+        String lista = gProdutos.listaProdutosParaString(gProdutos.listarProdutos());
         if (lista.equals("")) {
             mostrarErro("Nenhum produto encontrado!", "Erro");
         } else {
             mostrarMensagemGrande(lista, titulo);
         }
     }
-    
+
     public void relatorioProdutosPorNome() {
-    String nomeProduto = pegarValorDigitado("Digite o nome do produto:", "Relatório de Produtos");
-    System.out.println(nomeProduto);
-    if (nomeProduto == null) {
-        mostrarAlerta("Operação Cancelada", "Aviso");
-        return;
-    }
-    String listaProdutos = gProdutos.ListaProdutosParaString(gProdutos.listarProdutosPorNome(nomeProduto));
-    if (listaProdutos.equals("")) {
-        mostrarErro("Nenhum produto encontrado!", "Erro");
+        String nomeProduto = pegarValorDigitado("Digite o nome do produto:", "Relatório de Produtos");
+        System.out.println(nomeProduto);
+        if (nomeProduto == null) {
+            mostrarAlerta("Operação Cancelada", "Aviso");
+            return;
+        }
+        String listaProdutos = gProdutos.listaProdutosParaString(gProdutos.listarProdutosPorNome(nomeProduto));
+        if (listaProdutos.equals("")) {
+            mostrarErro("Nenhum produto encontrado!", "Erro");
         } else {
-        System.out.println(listaProdutos);
-        mostrarMensagemGrande(listaProdutos, "Produtos por nome: " + nomeProduto);
+            System.out.println(listaProdutos);
+            mostrarMensagemGrande(listaProdutos, "Produtos por nome: " + nomeProduto);
         }
     }
 
     public void relatorioProdutosVencidos() {
         String titulo = "Relação de Produtos Vencidos";
-        String lista = gProdutos.listaProdutosVencidosParaString(gProdutos.listarProdutosVencidos());
+        String lista = gProdutos.listaProdutosParaString(gProdutos.listarProdutosVencidos());
 
         if (lista.equals("")) {
             mostrarErro("Nenhum produto vencido encontrado!", "Erro");
-            } else {
+        } else {
             mostrarMensagemGrande(lista, titulo);
-            }
+        }
     }
 
     public void relatorioCompras() {
@@ -466,4 +471,3 @@ public class InterfaceUsuario {
         }
     }
 }
- 

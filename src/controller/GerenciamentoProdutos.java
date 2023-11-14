@@ -46,8 +46,8 @@ public class GerenciamentoProdutos {
         return produtosPereciveis;
     }
 
-    public List<ProdutoPerecivel> listarProdutosVencidos() {
-        List<ProdutoPerecivel> produtosVencidos = new ArrayList<>();
+    public List<Produto> listarProdutosVencidos() {
+        List<Produto> produtosVencidos = new ArrayList<>();
         for (Produto produto : produtos) {
             if (produto instanceof ProdutoPerecivel) {
                 if (((ProdutoPerecivel) produto).estaVencido()) {
@@ -58,31 +58,32 @@ public class GerenciamentoProdutos {
         return produtosVencidos;
     }
 
-    public Produto criarProduto(String nome, double preco, String descricao){
+    public Produto criarProduto(String nome, double preco, String descricao) {
         Produto novoProduto = new Produto(nome, preco, descricao);
         System.out.println("Produto criado com sucesso!");
         novoProduto.setarCodigo(produtos.size() + 1);
         return novoProduto;
     }
 
-    public ProdutoPerecivel criarProdutoPerecivel(String nome, double preco, String descricao, LocalDate dataValidade){
+    public ProdutoPerecivel criarProdutoPerecivel(String nome, double preco, String descricao, LocalDate dataValidade) {
         ProdutoPerecivel novoProdutoPerecivel = new ProdutoPerecivel(nome, preco, descricao, dataValidade);
         System.out.println("Produto perecivel adicionado com sucesso!");
         novoProdutoPerecivel.setarCodigo(produtos.size() + 1);
         return novoProdutoPerecivel;
     }
 
-    public LocalDate criarLocalDate(String dataString){
+    public LocalDate criarLocalDate(String dataString) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         return LocalDate.parse(dataString, formatter);
     }
-    
-    public String ListaProdutosParaString(List<Produto> listaProdutos) {
-    String lista = "";
-    for (Produto produto : listaProdutos) {
-        lista += produto.paraStringFormatado() + "\n\n==============================================================================\n\n";
-    }
-    return lista;
+
+    public String listaProdutosParaString(List<Produto> listaProdutos) {
+        String lista = "";
+        for (Produto produto : listaProdutos) {
+            lista += produto.paraStringFormatado()
+                    + "\n\n====================================================================\n\n";
+        }
+        return lista;
     }
 
     public List<Produto> listarProdutosPorNome(String nome) {
@@ -96,14 +97,4 @@ public class GerenciamentoProdutos {
         }
         return produtosPorNome;
     }
-
-    public String listaProdutosVencidosParaString(List<ProdutoPerecivel> listaProdutosVencidos) {
-        String lista = "";
-        for (ProdutoPerecivel produto : listaProdutosVencidos) {
-            lista += produto.paraStringFormatado() + "\n\n==============================================================================\n\n";
-        }
-        return lista;
-    }
-}    
-
-    
+}

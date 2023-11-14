@@ -132,7 +132,7 @@ public class GerenciamentoArquivos {
                     int codigo = Integer.parseInt(dados[0]);
                     String nome = dados[1];
                     String descricao = dados[2];
-                    double preco = Double.parseDouble(dados[3]);
+                    double preco = Double.parseDouble(dados[3].replace(',', '.'));
                     
                     Produto produto = new Produto(codigo, nome, preco, descricao);
 
@@ -143,7 +143,7 @@ public class GerenciamentoArquivos {
                     int codigo = Integer.parseInt(dados[0]);
                     String nome = dados[1];
                     String descricao = dados[2];
-                    double preco = Double.parseDouble(dados[3]);
+                    double preco = Double.parseDouble(dados[3].replace(',', '.'));
                     LocalDate dataValidade = LocalDate.parse(dados[4]);
 
                     ProdutoPerecivel produto = new ProdutoPerecivel(codigo, nome, preco, descricao, dataValidade);
@@ -181,15 +181,15 @@ public class GerenciamentoArquivos {
                 int identificador = Integer.parseInt(dados[0]);
                 LocalDate data = LocalDate.parse(dados[1]);
                 String docCliente = dados[2];
-                double valorTotal = Double.parseDouble(dados[3]);
-                double totalPago = Double.parseDouble(dados[4]);
+                double valorTotal = Double.parseDouble(dados[3].replace(',', '.'));
+                double totalPago = Double.parseDouble(dados[4].replace(',', '.'));
                 List<ItemCompra> itensComprados = new ArrayList<>();
 
                 // Adicionar itens comprados à lista
                 for (int i = 5; i < dados.length; i += 3) {
                     String nomeProduto = dados[i];
                     int quantidade = Integer.parseInt(dados[i + 1]);
-                    double precoUnitario = Double.parseDouble(dados[i + 2]);
+                    double precoUnitario = Double.parseDouble(dados[i + 2].replace(',', '.'));
                     itensComprados.add(new ItemCompra(quantidade, nomeProduto, precoUnitario, quantidade * precoUnitario));
                 }
 

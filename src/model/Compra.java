@@ -47,7 +47,7 @@ public class Compra {
                 "Documento do Cliente: " + docCliente + "\n" +
                 "Valor Total: " + pegarValorTotal() + "\n" +
                 "Total Pago: " + totalPago + "\n\n" +
-                "Itens Comprados: \n" + pegarItensCompradosFormatado() + "\n"; 
+                "Itens Comprados: \n" + pegarItensCompradosFormatado(); 
     }
 
     public int pegarIdentificador() {
