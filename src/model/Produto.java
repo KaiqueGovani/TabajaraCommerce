@@ -21,10 +21,10 @@ public class Produto {
 
     public String paraStringFormatado() {
         return "Produto: " +
-                ", Codigo: " + codigo +
-                ", Nome: " + nome +
-                ", Descricao: " + descricao +
-                ", Preco: " + preco;
+                "\nCodigo: " + codigo +
+                "\nNome: " + nome +
+                "\nDescricao: " + descricao +
+                "\nPreco: " + preco;
     }
 
     public String paraString() {
