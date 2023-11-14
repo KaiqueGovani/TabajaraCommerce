@@ -2,6 +2,7 @@ package controller;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import model.Compra;
@@ -184,4 +185,71 @@ public class GerenciamentoCompras {
             throw new RuntimeException("Compra não encontrada");
         }
     }
-}
+
+    public String listaComprasParaString(List<Compra> listaCompras) {
+        String lista = "";
+        for (Compra compra : listaCompras) {
+            lista += compra.paraStringFormatado() + "\n\n==============================================================================\n\n";
+        }
+        return lista;
+    }
+
+    public List<Compra> buscarComprasUltimos12Meses() {
+        List<Compra> comprasUltimos12Meses = new ArrayList<>();
+        LocalDate dataAtual = LocalDate.now();
+        LocalDate dataLimite = dataAtual.minusMonths(11).withDayOfMonth(1); // Começa do primeiro dia do mês, 12 meses atrás
+
+        for (Compra compra : listCompras) {
+            LocalDate dataCompra = compra.pegarDataPedido();
+            // Checa se a compra está dentro do intervalo do mês atual até 12 meses atrás
+            if ((dataCompra.isAfter(dataLimite) || dataCompra.isEqual(dataLimite)) && 
+                (dataCompra.isBefore(dataAtual.withDayOfMonth(1)) || dataCompra.getYear() == dataAtual.getYear())) {
+                comprasUltimos12Meses.add(compra);
+            }
+        }
+        // Ordena a lista por data
+        comprasUltimos12Meses.sort((compra1, compra2) -> compra1.pegarDataPedido().compareTo(compra2.pegarDataPedido()));
+
+        System.out.println(listaComprasParaString(comprasUltimos12Meses));
+        return comprasUltimos12Meses;
+    }
+
+
+    public String valorTotalUltimos12MesesParaString(List<Compra> listaCompras) {
+        HashMap<Integer, String> meses = new HashMap<>();
+        meses.put(1, "Janeiro");
+        meses.put(2, "Fevereiro");
+        meses.put(3, "Março");
+        meses.put(4, "Abril");
+        meses.put(5, "Maio");
+        meses.put(6, "Junho");
+        meses.put(7, "Julho");
+        meses.put(8, "Agosto");
+        meses.put(9, "Setembro");
+        meses.put(10, "Outubro");
+        meses.put(11, "Novembro");
+        meses.put(12, "Dezembro");
+
+        String lista = "";
+        HashMap<String, Double> valorTotalPorMesAno = new HashMap<>();
+
+        for (Compra compra : listaCompras) {
+            String mesAno = meses.get(compra.pegarDataPedido().getMonthValue()) + "/" + compra.pegarDataPedido().getYear();
+            valorTotalPorMesAno.merge(mesAno, compra.pegarValorTotal(), Double::sum);
+        }
+
+        for (Compra compra : listaCompras) {
+            String mesAno = meses.get(compra.pegarDataPedido().getMonthValue()) + "/" + compra.pegarDataPedido().getYear();
+            if (valorTotalPorMesAno.containsKey(mesAno)) {
+                double totalMes = valorTotalPorMesAno.remove(mesAno);
+                lista += mesAno + " - " + String.format("%.2f", totalMes) + " R$\n";
+            }
+        }
+
+        if (lista.equals("")) {
+            lista = "Não há compras nos últimos 12 meses";
+        }
+
+        return lista;
+    }
+}   

@@ -373,4 +373,16 @@ public class InterfaceUsuario {
             mostrarErro("Nenhuma compra encontrada!", "Erro");
         }
     }
+
+    public void valorComprasUltimos12Meses() {
+        try {
+            String titulo = "Valor total de compras feitas em cada mês nos últimos 12 meses";
+            String compras = gCompras.valorTotalUltimos12MesesParaString(gCompras.buscarComprasUltimos12Meses());
+            System.out.println(compras);
+            mostrarMensagem(compras, titulo);
+        } catch (Exception e) {
+            mostrarErro("Nenhuma compra encontrada!", "Erro");
+        }
+    }
 }
+ 

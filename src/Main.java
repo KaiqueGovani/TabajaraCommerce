@@ -93,6 +93,7 @@ public class Main {
                                                 break;
                                             case "k":
                                                 // TODO: compras feitas em cada mes ultimos 12 meses - Kapo
+                                                menu.valorComprasUltimos12Meses();
                                                 break;
                                             case "l":
                                                 break;
