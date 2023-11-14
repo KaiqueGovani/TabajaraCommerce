@@ -96,7 +96,14 @@ public class GerenciamentoProdutos {
         }
         return produtosPorNome;
     }
-}
 
+    public String listaProdutosVencidosParaString(List<ProdutoPerecivel> listaProdutosVencidos) {
+        String lista = "";
+        for (ProdutoPerecivel produto : listaProdutosVencidos) {
+            lista += produto.paraStringFormatado() + "\n\n==============================================================================\n\n";
+        }
+        return lista;
+    }
+}    
 
     
