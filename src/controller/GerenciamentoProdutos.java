@@ -76,13 +76,14 @@ public class GerenciamentoProdutos {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         return LocalDate.parse(dataString, formatter);
     }
-public String ListaProdutosParaString(List<Produto> listaProdutos) {
+    
+    public String ListaProdutosParaString(List<Produto> listaProdutos) {
     String lista = "";
     for (Produto produto : listaProdutos) {
         lista += produto.paraStringFormatado() + "\n\n==============================================================================\n\n";
     }
     return lista;
-}
+    }
 
     public List<Produto> listarProdutosPorNome(String nome) {
         List<Produto> produtosPorNome = new ArrayList<>();
