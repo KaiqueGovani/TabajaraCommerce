@@ -8,8 +8,6 @@ import java.util.List;
 import model.Produto;
 import model.ProdutoPerecivel;
 
-
-//! Seria bom adicionar docstrings nos métodos, para facilitar a leitura do código.
 public class GerenciamentoProdutos {
 
     private List<Produto> produtos;
@@ -78,5 +76,26 @@ public class GerenciamentoProdutos {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         return LocalDate.parse(dataString, formatter);
     }
+public String ListaProdutosParaString(List<Produto> listaProdutos) {
+    String lista = "";
+    for (Produto produto : listaProdutos) {
+        lista += produto.paraStringFormatado() + "\n\n==============================================================================\n\n";
+    }
+    return lista;
 }
+
+    public List<Produto> listarProdutosPorNome(String nome) {
+        List<Produto> produtosPorNome = new ArrayList<>();
+        for (Produto produto : produtos) {
+            if (produto.pegarNome()
+                    .toLowerCase()
+                    .startsWith(nome.toLowerCase())) {
+                produtosPorNome.add(produto);
+            }
+        }
+        return produtosPorNome;
+    }
+}
+
+
     
