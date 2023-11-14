@@ -55,7 +55,7 @@ public class PessoaJuridica extends Cliente {
                "\nCNPJ: " + cnpj +
                "\nRazão Social: " + razaoSocial +
                "\nPrazo de Pagamento: " + prazoPagamento+
-               "\nEndereço: " + endereco.paraString();
+               "\nEndereço: " + endereco.paraStringFormatado();
     }
 
     @Override
