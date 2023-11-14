@@ -83,8 +83,7 @@ public class Main {
                                                 menu.relatorioComprasNaoPagas();
                                                 break;
                                             case "h":
-                                                // TODO: Mostrar as 10 ultimas compras pagas - Milton/Kapo
-                                                menu.relatorioDezUltimasPagas();
+                                                menu.relatorio10UltimasPagas();
                                                 break;
                                             case "i":
                                                 menu.compraMaisCara();
@@ -93,7 +92,6 @@ public class Main {
                                                 menu.compraMaisBarata();
                                                 break;
                                             case "k":
-                                                // TODO: compras feitas em cada mes ultimos 12 meses - Kapo
                                                 menu.valorComprasUltimos12Meses();
                                                 break;
                                             case "l":

@@ -78,6 +78,21 @@ public class InterfaceUsuario {
         return valorDigitado;
     }
 
+    public static String pegarValorDigitadoCancelavel(String msg, String titulo) {
+        String valorDigitado;
+        do {
+            valorDigitado = JOptionPane.showInputDialog(null, msg, titulo, JOptionPane.PLAIN_MESSAGE);
+            if (valorDigitado == null) {
+                throw new RuntimeException("Operação cancelada");
+            }
+            if (valorDigitado.equals("")) {
+                mostrarAlerta("Entrada inválida!", titulo);
+            }
+        } while (valorDigitado.equals(""));
+
+        return valorDigitado;
+    }
+
     public String menuPrincipal() {
         String menu = "1. Cadastros de Clientes\n" +
                 "2. Deletar cliente pelo CPF ou CNPJ\n" +
@@ -111,19 +126,20 @@ public class InterfaceUsuario {
             try {
                 int opcaoInt = Integer.parseInt(valorSelecionado);
                 if (opcaoInt >= 1 && opcaoInt <= 2) {
-                    String nome = pegarValorDigitado("Digite o nome do cliente:", titulo);
-                    String rua = pegarValorDigitado("Digite a rua do cliente:", titulo);
-                    int numero = Integer.parseInt(pegarValorDigitado("Digite o número da casa:", titulo));
-                    String bairro = pegarValorDigitado("Digite o bairro do cliente:", titulo);
-                    String cep = pegarValorDigitado("Digite o CEP do cliente:", titulo);
-                    String cidade = pegarValorDigitado("Digite a cidade do cliente:", titulo);
-                    String estado = pegarValorDigitado("Digite o estado do cliente:", titulo);
+                    String nome = pegarValorDigitadoCancelavel("Digite o nome do cliente:", titulo);
+                    String rua = pegarValorDigitadoCancelavel("Digite a rua do cliente:", titulo);
+                    int numero = Integer.parseInt(pegarValorDigitadoCancelavel("Digite o número da casa:", titulo));
+                    String bairro = pegarValorDigitadoCancelavel("Digite o bairro do cliente:", titulo);
+                    String cep = pegarValorDigitadoCancelavel("Digite o CEP do cliente:", titulo);
+                    String cidade = pegarValorDigitadoCancelavel("Digite a cidade do cliente:", titulo);
+                    String estado = pegarValorDigitadoCancelavel("Digite o estado do cliente:", titulo);
 
                     switch (opcaoInt) {
                         case 1: // Pessoa Física
-                            String cpf = pegarValorDigitado("Digite o CPF do cliente:", titulo);
+                            String cpf = pegarValorDigitadoCancelavel("Digite o CPF do cliente:", titulo);
                             int qtdMaxParcelas = Integer.parseInt(
-                                    pegarValorDigitado("Digite a quantidade máxima de parcelas do cliente:", titulo));
+                                    pegarValorDigitadoCancelavel("Digite a quantidade máxima de parcelas do cliente:",
+                                            titulo));
 
                             gClientes.cadastrarCliente(gClientes.criarPessoaFisica(
                                     nome,
@@ -134,10 +150,12 @@ public class InterfaceUsuario {
                             mostrarMensagem("Cliente cadastrado com sucesso!", titulo);
                             break;
                         case 2: // Pessoa Jurídica
-                            String cnpj = pegarValorDigitado("Digite o CNPJ do cliente:", titulo);
-                            String razaoSocial = pegarValorDigitado("Digite a razão social do cliente:", titulo);
+                            String cnpj = pegarValorDigitadoCancelavel("Digite o CNPJ do cliente:", titulo);
+                            String razaoSocial = pegarValorDigitadoCancelavel("Digite a razão social do cliente:",
+                                    titulo);
                             int prazoPagamento = Integer
-                                    .parseInt(pegarValorDigitado("Digite o prazo de pagamento do cliente:", titulo));
+                                    .parseInt(pegarValorDigitadoCancelavel("Digite o prazo de pagamento do cliente:",
+                                            titulo));
 
                             gClientes.cadastrarCliente(gClientes.criarPessoaJuridica(
                                     nome,
@@ -165,7 +183,7 @@ public class InterfaceUsuario {
 
     public void deletarClientePorDocumento() {
         String titulo = "Deletar Cliente";
-        String documento = pegarValorDigitado("Digite o documento do cliente:", titulo);
+        String documento = pegarValorDigitadoCancelavel("Digite o documento do cliente:", titulo);
         if (gClientes.deletarPeloDocumento(documento)) {
             mostrarMensagem("Cliente deletado com sucesso!", titulo);
         } else {
@@ -175,7 +193,7 @@ public class InterfaceUsuario {
 
     public void deletarClientePorNome() {
         String titulo = "Deletar Cliente";
-        String nome = pegarValorDigitado("Digite o nome do cliente:", titulo);
+        String nome = pegarValorDigitadoCancelavel("Digite o nome do cliente:", titulo);
         System.out.println(nome);
         if (gClientes.deletarPeloNome(nome)) {
             mostrarMensagem("Cliente deletado com sucesso!", titulo);
@@ -198,8 +216,17 @@ public class InterfaceUsuario {
                 int opcaoInt = Integer.parseInt(valorSelecionado);
                 if (opcaoInt >= 1 && opcaoInt <= 2) {
                     String nome = pegarValorDigitado("Digite o nome do produto:", titulo);
-                    double preco = Double.parseDouble(pegarValorDigitado("Digite o preço do produto:", titulo).replace(',', '.'));
+                    if (nome == null)
+                        throw new RuntimeException("Operação cancelada");
+
+                    String precoString = pegarValorDigitado("Digite o preço do produto:", titulo);
+                    if (precoString == null)
+                        throw new RuntimeException("Operação cancelada");
+                    double preco = Double.parseDouble(precoString.replace(',', '.'));
+
                     String descricao = pegarValorDigitado("Digite a descrição do produto:", titulo);
+                    if (descricao == null)
+                        throw new RuntimeException("Operação cancelada");
 
                     switch (opcaoInt) {
                         case 1: // Produto
@@ -209,6 +236,8 @@ public class InterfaceUsuario {
                         case 2: // Produto Perecível
                             String dataValidade = pegarValorDigitado(
                                     "Digite a data de validade do produto (dd/mm/yyyy):", titulo);
+                            if (dataValidade == null)
+                                throw new RuntimeException("Operação cancelada");
 
                             gProdutos.cadastrarProdutos(gProdutos.criarProdutoPerecivel(nome, preco, descricao,
                                     gProdutos.criarLocalDate(dataValidade)));
@@ -228,13 +257,10 @@ public class InterfaceUsuario {
 
     public void efetuarCompra() {
         String titulo = "Efetuar uma Compra";
-        try {
-            String docCliente = pegarValorDigitado("Digite o documento do cliente: (CPF/CNPJ)", titulo);
-            if (docCliente == null) {
-                return;
-            }
+        String docCliente = pegarValorDigitadoCancelavel("Digite o documento do cliente: (CPF/CNPJ)", titulo);
 
-            int id = gCompras.cadastrarCompra(docCliente);
+        int id = gCompras.cadastrarCompra(docCliente);
+        try {
             if (id > 0) { // Se a compra foi cadastrada com sucesso
                 int valorSelecionado;
                 do {
@@ -243,15 +269,17 @@ public class InterfaceUsuario {
                             "Digite o número da opção desejada:";
                     titulo = "Cadastrar um produto";
 
-                    valorSelecionado = Integer.parseInt(pegarValorDigitado(menu, titulo));
+                    valorSelecionado = Integer.parseInt(pegarValorDigitadoCancelavel(menu, titulo));
                     switch (valorSelecionado) {
                         case 1: // Adicionar item
                             cadastrarItemCompra(id);
                             break;
                         case 2: // Finalizar compra
+                            gCompras.verificarCompraFinalizavel(id);
                             boolean resultado;
                             do { // Pede o valor pago que deve ser menor ou igual ao valor faltante
-                                int pago = Integer.parseInt(pegarValorDigitado("Digite o valor pago:", titulo));
+                                int pago = Integer
+                                        .parseInt(pegarValorDigitadoCancelavel("Digite o valor pago:", titulo));
                                 resultado = gCompras.atualizaValorFaltante(id, pago);
                                 if (!resultado) {
                                     mostrarErro("Valor pago maior que o valor faltante!", titulo);
@@ -264,12 +292,18 @@ public class InterfaceUsuario {
                     }
                 } while (valorSelecionado != 2);
             } else {
-                throw new Exception("Erro ao cadastrar compra");
+                throw new RuntimeException("Erro ao cadastrar compra");
             }
             mostrarMensagem("Compra efetuada com sucesso!", titulo);
-        } catch (Exception e) {
+        } catch (NumberFormatException e) {
             System.out.println(e.getMessage());
             mostrarErro("Erro ao efetuar compra", "Erro");
+        } catch (Exception e) {
+            if (id > 0) { // Se a compra foi criada mas houve algum erro
+                gCompras.deletarCompra(id);
+                System.out.println("Compra cancelada foi deletada");
+            }
+            throw new RuntimeException(e.getMessage()); // Propaga a exceção
         }
     }
 
@@ -278,7 +312,8 @@ public class InterfaceUsuario {
             String titulo = "Cadastrar um produto";
             String nomeProduto = pegarValorDigitado("Digite o nome do produto:", titulo);
             int quantidade = Integer.parseInt(pegarValorDigitado("Digite a quantidade do produto:", titulo));
-            double precoUnitario = Double.parseDouble(pegarValorDigitado("Digite o preço unitario:", titulo).replace(',', '.'));
+            double precoUnitario = Double
+                    .parseDouble(pegarValorDigitado("Digite o preço unitario:", titulo).replace(',', '.'));
             gCompras.adicionarItemCompraPorIdentificador(identificador,
                     gCompras.criarItemCompra(quantidade, nomeProduto, precoUnitario, quantidade * precoUnitario));
             mostrarMensagem("Item de compra criado e adicionado com sucesso!", titulo);
@@ -292,14 +327,14 @@ public class InterfaceUsuario {
 
             String titulo = "Atualizar situação de pagamento";
 
-            int identificador = Integer.parseInt(pegarValorDigitado("Digite o identificador da compra", titulo));
+            int identificador = Integer.parseInt(pegarValorDigitadoCancelavel("Digite o identificador da compra", titulo));
             double valorFaltante = gCompras.pegarValorFaltantePorIdentificador(identificador);
             if (valorFaltante == 0) {
-                mostrarMensagem("Essa compra já foi paga!", titulo);
+                mostrarInfo("Essa compra já foi paga!", titulo);
                 return;
             }
 
-            String valorPagoString = pegarValorDigitado(
+            String valorPagoString = pegarValorDigitadoCancelavel(
                     String.format("Digite o valor a pagar (restante: %.2f)", valorFaltante), titulo);
 
             if (identificador != 0 && valorPagoString != null) {
@@ -307,6 +342,7 @@ public class InterfaceUsuario {
                     double valorPago = Double.parseDouble(valorPagoString.replace(',', '.'));
                     boolean atualizacaoSucesso = gCompras.atualizaValorFaltante(identificador, valorPago);
                     if (atualizacaoSucesso) {
+                        gCompras.fecharCompra(identificador);
                         mostrarMensagem("Valor pago atualizado com sucesso!", titulo);
                     } else {
                         throw new Exception("Valor pago maior que o valor faltante!");
@@ -427,7 +463,7 @@ public class InterfaceUsuario {
         }
     }
 
-    public void relatorioDezUltimasPagas() {
+    public void relatorio10UltimasPagas() {
         String titulo = "Relação das 10 últimas compras pagas";
         String listaPaga = gCompras.listaComprasParaString(gCompras.listarComprasUltimasPagas());
         System.out.println(listaPaga);

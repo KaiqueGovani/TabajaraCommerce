@@ -108,4 +108,8 @@ public class Compra {
         }
         return itens;
     }
+
+    public int pegarQuantidadeItens() {
+        return itensComprados.size();
+    }
 }

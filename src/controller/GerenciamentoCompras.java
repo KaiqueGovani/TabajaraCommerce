@@ -3,10 +3,8 @@ package controller;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import model.Compra;
 import model.ItemCompra;
@@ -105,12 +103,15 @@ public class GerenciamentoCompras {
     }
 
     /**
-     * Lista todas as compras
+     * Lista todas as compras em ordem de identificador
      * 
      * @return lista de compras
      */
     public List<Compra> listarCompras() {
-        return new ArrayList<>(this.listCompras); // Retorna uma lista de compras
+        // Retorna uma lista de compras ordenada por identificador
+        List<Compra> listaOrdenada = new ArrayList<>(listCompras);
+        listaOrdenada.sort((compra1, compra2) -> compra1.pegarIdentificador() - compra2.pegarIdentificador());
+        return new ArrayList<>(listaOrdenada);
     }
 
     /**
@@ -224,13 +225,21 @@ public class GerenciamentoCompras {
 
     public List<Compra> listarComprasUltimasPagas() {
         // Filtrar apenas as compras pagas
-        List<Compra> comprasPagas = listCompras.stream()
-                .filter(compra -> compra.pegarValorFaltante() == 0)
-                .collect(Collectors.toList());
+        List<Compra> comprasPagas = new ArrayList<>();
+        for (Compra compra : listCompras) {
+            if (compra.pegarValorFaltante() == 0) {
+                comprasPagas.add(compra);
+            }
+        }
 
         // Pegar as últimas dez compras (ou menos se houver menos de dez)
         int limite = Math.min(comprasPagas.size(), 10);
-        return comprasPagas.subList(0, limite);
+        comprasPagas = comprasPagas.subList(0, limite);
+
+        // Inverter a lista para que as compras mais recentes fiquem no início
+        Collections.reverse(comprasPagas);
+        
+        return comprasPagas;
     }
 
     public List<Compra> buscarComprasUltimos12Meses() {
@@ -293,5 +302,42 @@ public class GerenciamentoCompras {
         }
 
         return lista;
+    }
+
+    public void deletarCompra(int id) {
+        Compra compra = buscarCompraPeloIdentificador(id);
+        if (compra != null) {
+            listCompras.remove(compra);
+        } else {
+            System.out.println("Compra não encontrada");
+            throw new RuntimeException("Compra não encontrada");
+        }
+    }
+
+    public void realocarCompra(Compra compra) {
+        listCompras.remove(compra);
+        listCompras.add(compra);
+    }
+
+    public void verificarCompraFinalizavel(int id) {
+        Compra compra = buscarCompraPeloIdentificador(id);
+        if (compra != null) {
+            if (compra.pegarQuantidadeItens() == 0) {
+                System.out.println("Compra não finalizável");
+                throw new RuntimeException("Nenhum item adicionado à compra, cancelando!");
+            }
+        } else {
+            System.out.println("Compra não encontrada");
+            throw new RuntimeException("Compra não encontrada");
+        }
+    }
+
+    public void fecharCompra(int identificador) {
+        Compra compra = buscarCompraPeloIdentificador(identificador);
+        if (compra != null) {
+            realocarCompra(compra);
+        } else {
+            throw new RuntimeException("Não foi possível fechar a compra");   
+        }
     }
 }
