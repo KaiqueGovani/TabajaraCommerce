@@ -2,8 +2,11 @@ package controller;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import model.Compra;
 import model.ItemCompra;
@@ -193,6 +196,37 @@ public class GerenciamentoCompras {
         }
         return lista;
     }
+
+    public List<Compra> listarComprasPorIdentificador(int identificador) {
+        List<Compra> comprasPorIdentificador = new ArrayList<>();
+        for (Compra compra : listCompras) {
+            if (compra.pegarIdentificador() == identificador) {
+                comprasPorIdentificador.add(compra);
+            }
+        }
+        return comprasPorIdentificador;
+    }
+
+    public List<Compra> listarComprasNaoPagas() {
+        List<Compra> comprasNaoPagas = new ArrayList<>();
+        for (Compra compra : listCompras) {
+            if (compra.pegarValorFaltante() > 0) {
+                comprasNaoPagas.add(compra);
+            }
+        }
+        return comprasNaoPagas;
+    }
+
+    public List<Compra> listarComprasUltimasPagas() {
+        // Filtrar apenas as compras pagas
+        List<Compra> comprasPagas = listCompras.stream()
+                .filter(compra -> compra.pegarValorFaltante() == 0)
+                .collect(Collectors.toList());
+
+        // Pegar as últimas dez compras (ou menos se houver menos de dez)
+        int limite = Math.min(comprasPagas.size(), 10);
+        return comprasPagas.subList(0, limite);
+    }    
 
     public List<Compra> buscarComprasUltimos12Meses() {
         List<Compra> comprasUltimos12Meses = new ArrayList<>();
