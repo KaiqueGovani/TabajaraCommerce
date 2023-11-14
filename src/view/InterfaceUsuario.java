@@ -352,6 +352,32 @@ public class InterfaceUsuario {
         }
     }
 
+    public void relatorioProdutos() {
+        String titulo = "Relação de todos os Produtos";
+        String lista = gProdutos.ListaProdutosParaString(gProdutos.listarProdutos());
+        if (lista.equals("")) {
+            mostrarErro("Nenhum produto encontrado!", "Erro");
+        } else {
+            mostrarMensagemGrande(lista, titulo);
+        }
+    }
+    
+    public void relatorioProdutosPorNome() {
+    String nomeProduto = pegarValorDigitado("Digite o nome do produto:", "Relatório de Produtos");
+    System.out.println(nomeProduto);
+    if (nomeProduto == null) {
+        mostrarAlerta("Operação Cancelada", "Aviso");
+        return;
+    }
+    String listaProdutos = gProdutos.ListaProdutosParaString(gProdutos.listarProdutosPorNome(nomeProduto));
+    if (listaProdutos.equals("")) {
+        mostrarErro("Nenhum produto encontrado!", "Erro");
+        } else {
+        System.out.println(listaProdutos);
+        mostrarMensagemGrande(listaProdutos, "Produtos por nome: " + nomeProduto);
+        }
+    }
+
     public void compraMaisCara() {
         try {
             String titulo = "Compra mais cara";
