@@ -30,7 +30,7 @@ public class GerenciamentoClientes {
      */
     public boolean cadastrarCliente(Cliente cliente) {
         if (buscaPeloDocumento(cliente.pegarDocumento())) {
-            return false; // Cliente já existe
+            throw new RuntimeException("Cliente já existe com mesmo documento");
         }
         clientes.add(cliente);
         // ! Logs para Depuração
